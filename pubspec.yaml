@@ -43,6 +43,7 @@ dependencies:
   line_icons: ^2.0.3
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.5
+  icon_forest: ^1.1.8
 
 dev_dependencies:
   flutter_test:
