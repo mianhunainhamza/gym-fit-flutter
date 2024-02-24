@@ -195,7 +195,7 @@ class LoginScreen extends StatelessWidget {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.signInWithEmailAndPassword(email: email, password: pass);
     } on Exception catch (e) {
-      Get.snackbar('Auth Error', e.toString());
+      Get.snackbar('Error', e.toString());
     }
   }
 }
