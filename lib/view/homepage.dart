@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -18,14 +19,15 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
         body: RefreshIndicator(
-          edgeOffset: 100,
+          displacement: Get.height * 0.1,
+          edgeOffset: Get.height * 0.1,
           color: Colors.amber,
           onRefresh: refresh,
           child: SafeArea(
             child: SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(28),
+                padding: EdgeInsets.all(Get.width * 0.06),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -36,12 +38,13 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Hello dude",
-                                style: GoogleFonts.poppins(fontSize: 22)),
+                                style: GoogleFonts.poppins(
+                                    fontSize: Get.width * 0.088)),
                             const SizedBox(height: 5),
                             Text(
                               "Let's get workout.",
                               style: GoogleFonts.poppins(
-                                fontSize: 22,
+                                fontSize: Get.width * 0.07,
                                 color: Colors.amber,
                                 fontWeight: FontWeight.w700,
                                 fontStyle: FontStyle.italic,
@@ -50,8 +53,8 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 55,
-                          width: 55,
+                          height: Get.width * 0.15,
+                          width: Get.width * 0.15,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.all(
                               Radius.circular(20000),
@@ -64,10 +67,10 @@ class HomePage extends StatelessWidget {
                         )
                       ],
                     ),
-                    const SizedBox(height: 25),
+                    SizedBox(height: Get.height * 0.03),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 175,
+                      width: Get.width,
+                      height: Get.height * 0.2,
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -76,7 +79,7 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               Container(
-                                width: 200,
+                                width: Get.width * 0.6,
                                 decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
@@ -101,12 +104,14 @@ class HomePage extends StatelessWidget {
                                               "6 weeks",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                             Text(
                                               "Hand Muscles",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                           ],
@@ -118,36 +123,36 @@ class HomePage extends StatelessWidget {
                                             Text(
                                               "\$12.22",
                                               style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: Get.width * 0.035),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    SizedBox(height: Get.height * 0.015),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 15),
+                              SizedBox(width: Get.width * 0.03),
                             ],
                           );
                         },
                       ),
                     ),
-                    const SizedBox(height: 36),
+                    SizedBox(height: Get.height * 0.04),
                     Text(
                       "Featured Trainers",
                       style: GoogleFonts.poppins(
-                        fontSize: 22,
+                        fontSize: Get.width * 0.06,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: Get.height * 0.015),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 120,
+                      height: Get.height * 0.14,
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -158,8 +163,8 @@ class HomePage extends StatelessWidget {
                               Column(
                                 children: [
                                   Container(
-                                    width: 85,
-                                    height: 85,
+                                    width: Get.width * 0.21,
+                                    height: Get.width * 0.21,
                                     decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(2000)),
@@ -171,34 +176,34 @@ class HomePage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: Get.height * 0.015),
                                   Text(
                                     "Areeb",
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: Get.width * 0.04,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   )
                                 ],
                               ),
-                              const SizedBox(width: 15),
+                              SizedBox(width: Get.width * 0.025),
                             ],
                           );
                         },
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: Get.height * 0.025),
                     Text(
                       "Popular Courses",
                       style: GoogleFonts.poppins(
-                        fontSize: 22,
+                        fontSize: Get.width * 0.06,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: Get.height * 0.015),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 175,
+                      height: Get.height * 0.22,
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -207,11 +212,11 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               Container(
-                                width: 150,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  image: DecorationImage(
+                                width: Get.width * 0.35,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Get.width * 0.04)),
+                                  image: const DecorationImage(
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.fitHeight,
                                     image:
@@ -225,7 +230,7 @@ class HomePage extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        const SizedBox(width: 15),
+                                        SizedBox(width: Get.width * 0.04),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -234,40 +239,42 @@ class HomePage extends StatelessWidget {
                                               "6 weeks",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                             Text(
                                               "Body Combat",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    SizedBox(height: Get.height * 0.015),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 15),
+                              SizedBox(width: Get.width * 0.035),
                             ],
                           );
                         },
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: Get.height * 0.03),
                     Text(
                       "Latest Videos",
                       style: GoogleFonts.poppins(
-                        fontSize: 22,
+                        fontSize: Get.width * 0.06,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: Get.height * 0.015),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 175,
+                      height: Get.height * 0.22,
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -276,11 +283,11 @@ class HomePage extends StatelessWidget {
                           return Row(
                             children: [
                               Container(
-                                width: 175,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  image: DecorationImage(
+                                width: Get.width * 0.45,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Get.width * 0.04)),
+                                  image: const DecorationImage(
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.cover,
                                     image:
@@ -294,32 +301,34 @@ class HomePage extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        const SizedBox(width: 15),
+                                        SizedBox(width: Get.width * 0.035),
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "6 weeks",
+                                              "2 weeks",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                             Text(
-                                              "Body Combat",
+                                              "Zumba Fitness",
                                               style: GoogleFonts.poppins(
                                                 color: Colors.white,
+                                                fontSize: Get.width * 0.035,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    SizedBox(height: Get.height * 0.015),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 15),
+                              SizedBox(width: Get.width * 0.035),
                             ],
                           );
                         },
@@ -332,16 +341,17 @@ class HomePage extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  top: BorderSide(color: Colors.black.withOpacity(0.5)))),
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          // decoration: BoxDecoration(
+          //     border: Border(
+          //         top: BorderSide(color: Colors.black.withOpacity(0.5)))),
+          padding: EdgeInsets.fromLTRB(Get.width * 0.05, Get.width * 0.015,
+              Get.width * 0.05, Get.width * 0.05),
           child: GNav(
               rippleColor:
                   Colors.amber.shade200, // tab button ripple color when pressed
               hoverColor: Colors.amber.shade400, // tab button hover color
               haptic: true, // haptic feedback
-              tabBorderRadius: 15,
+              tabBorderRadius: Get.width * 0.8,
               // tabActiveBorder: Border.all(
               //     color: Colors.amber, width: 1), // tab button border
               // tabBorder:
@@ -355,26 +365,22 @@ class HomePage extends StatelessWidget {
               gap: 8, // the tab button gap between icon and text
               color: Colors.black.withOpacity(0.3), // unselected icon color
               activeColor: Colors.black, // selected icon and text color
-              iconSize: 24, // tab button icon size
+              iconSize: Get.width * 0.08, // tab button icon size
 
               padding: const EdgeInsets.symmetric(
                   horizontal: 20, vertical: 5), // navigation bar padding
               tabs: const [
                 GButton(
                   icon: LineIcons.home,
-                  iconSize: 28,
                 ),
                 GButton(
-                  icon: LineIcons.heart,
-                  iconSize: 28,
+                  icon: LineIcons.trophy,
                 ),
                 GButton(
                   icon: LineIcons.search,
-                  iconSize: 28,
                 ),
                 GButton(
                   icon: LineIcons.user,
-                  iconSize: 28,
                 )
               ]),
         ));
