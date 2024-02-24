@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -23,10 +25,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'Verify Email',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        // title: Text(
+        //   'Verify Email',
+        //   style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+        // ),
         centerTitle: true,
       ),
       body: Center(
@@ -35,7 +37,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
-              child: Lottie.asset('assets/images/reset.json'),
+              child: Lottie.asset('assets/animations/reset.json'),
             ),
             const SizedBox(
               height: 20,
@@ -44,7 +46,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               width: MediaQuery.of(context).size.width * .8,
               child: Text(
                 'An email has been sent to ${widget.email}. Please verify your email to continue.',
-                style: const TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -57,9 +59,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: yellowColor,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(width: 2, color: Colors.black),
                 ),
                 alignment: Alignment.center,
                 height: mediaQuerySize.width * 0.13,
@@ -67,9 +68,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 child:const Text(
                   "Resend Verification Email",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 17,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -80,9 +81,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        backgroundColor: Colors.white,
-        onPressed:
-            ()
+        backgroundColor: yellowColor,
+        onPressed:()
         {
           Get.offAll(BottomNavigation(),transition: Transition.cupertino);
         },

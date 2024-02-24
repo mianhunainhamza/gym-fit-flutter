@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/Model/user_model.dart';
-import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
+import 'package:softec_app_dev/view/verify_email.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -266,32 +266,29 @@ class _SignupPageState extends State<SignupPage> {
                             },
                           );
                         }
+                        else
+                          {
+                            createUser(emailController.text,passController.text);
+                            addUser(emailController.text,passController.text,
+                                nameController.text, selectedRole);
+                          }
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20, left: 20),
-                      child: InkWell(
-                        onTap: () async {
-                          if(_formKey.currentState!.validate()){
-                            createUser(emailController.text,passController.text);
-                            addUser(emailController.text,passController.text,
-                                    nameController.text, selectedRole);
-                          }
-                        },
-                        child: Container(
-                          width: Get.width,
-                          height: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromRGBO(253, 215, 138, 1),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'CREATE ACCOUNT',
-                              style: GoogleFonts.poppins(
-                                fontSize: Get.height * 0.026,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      child: Container(
+                        width: Get.width,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color.fromRGBO(253, 215, 138, 1),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'CREATE ACCOUNT',
+                            style: GoogleFonts.poppins(
+                              fontSize: Get.height * 0.026,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -311,7 +308,7 @@ class _SignupPageState extends State<SignupPage> {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.createUserWithEmailAndPassword(email: email, password: pass);
-      Get.offAll(const HomePage(),transition: Transition.cupertino);
+      Get.offAll( VerifyEmailPage(email: email),transition: Transition.cupertino);
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }
@@ -320,10 +317,12 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> addUser(email,pass, name, role) async {
     try {
+      User? user = FirebaseAuth.instance.currentUser;
       final cloud = FirebaseFirestore.instance;
       CollectionReference ref = cloud.collection('Users');
-      UserModel user = UserModel(username: name, pass: pass, email: email, role: role);
-      ref.add(user.toJson());
+      await user?.sendEmailVerification();
+      UserModel users = UserModel(username: name, pass: pass, email: email, role: role);
+      ref.add(users.toJson());
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }
