@@ -35,7 +35,7 @@ class Events extends StatelessWidget {
                   style: GoogleFonts.poppins(
                       fontSize: Get.height * .018,
                       fontWeight: FontWeight.w600,
-                      color: yellowDark),
+                      color: yellowDark,),
                 ),
               ],
             ),
