@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:softec_app_dev/view/homepage.dart';
+import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -35,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: Get.height * 0.06,),
-                Container(
+                SizedBox(
                     height: Get.height * .35,
                     child: Lottie.asset('assets/animations/dumble.json')),
 
@@ -174,7 +176,7 @@ class LoginScreen extends StatelessWidget {
                     // Navigate to SignUp
                     InkWell(
                         onTap: () {
-
+                          Get.to(const SignupPage(),transition: Transition.cupertino);
                         },
                         child: const Text(
                           '  Register Now',
@@ -194,6 +196,7 @@ class LoginScreen extends StatelessWidget {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.signInWithEmailAndPassword(email: email, password: pass);
+      Get.to(const HomePage());
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }
