@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:softec_app_dev/view/signup_page.dart';
+import 'package:softec_app_dev/view/sign_up_page.dart';
 
 class OnBoardPage extends StatelessWidget {
   const OnBoardPage({super.key});
@@ -30,7 +30,7 @@ class OnBoardPage extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        fontSize: size.height * 0.055,
+                        fontSize: Get.height * .055,
                         fontWeight: FontWeight.bold,
                         color: const Color.fromRGBO(253, 220, 138, 1),
                       ),
@@ -93,7 +93,7 @@ class OnBoardPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to( () => const SignUpPage(),transition: Transition.cupertino);
+                    Get.to( () => const SignupPage(),transition: Transition.cupertino);
                   },
                   child: Container(
                     // width: (size.width - 200) / 2,
