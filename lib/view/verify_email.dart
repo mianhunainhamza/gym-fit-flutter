@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 import 'package:softec_app_dev/view/login_screen.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -26,10 +24,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // title: Text(
-        //   'Verify Email',
-        //   style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-        // ),
         centerTitle: true,
       ),
       body: Center(
