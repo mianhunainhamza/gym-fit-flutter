@@ -11,14 +11,15 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
             onTap: () {
-              Get.to(const OnBoardPage(),transition: Transition.cupertino);
+              Get.to(() => const OnBoardPage(),transition: Transition.cupertino);
             },
             child: const Icon(Icons.arrow_back_ios_new)),
         automaticallyImplyLeading: false,
       ),
       //body part
-      body: Stack(
+      body: Column(
         children: [
+          Image.asset('assets/images/girl.png'),
         ],
       ),
     );
