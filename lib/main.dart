@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
+import 'package:softec_app_dev/view/Home/search.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'firebase_options.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home:  BottomNavigation(),
+      home: Search(),
     );
   }
 }
