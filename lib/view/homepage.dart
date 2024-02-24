@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(28),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,6 +55,7 @@ class HomePage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 175,
                 child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
                   itemBuilder: (context, index) {
@@ -117,7 +119,57 @@ class HomePage extends StatelessWidget {
                     );
                   },
                 ),
-              )
+              ),
+              const SizedBox(height: 36),
+              Text(
+                "Featured Trainers",
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 15),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 120,
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 7,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              width: 85,
+                              height: 85,
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2000)),
+                                image: DecorationImage(
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.fitHeight,
+                                  image: AssetImage("assets/images/dp.jpg"),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Areeb",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(width: 15),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
