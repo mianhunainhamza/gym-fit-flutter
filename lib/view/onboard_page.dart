@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/view/signup_page.dart';
 
 class OnBoardPage extends StatelessWidget {
-  const OnBoardPage({Key? key});
+  const OnBoardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class OnBoardPage extends StatelessWidget {
           SizedBox(
             width: size.width,
             height: size.height - 300,
-            child: Image.asset('assets/images/girl.png', fit: BoxFit.fitHeight),
+            child: Image.asset('assets/images/girl.png', fit: BoxFit.fitHeight,filterQuality: FilterQuality.high,),
           ),
 
           // Buttons
@@ -79,22 +81,33 @@ class OnBoardPage extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'L O G I N',
-                        style: GoogleFonts.poppins(fontSize: size.height * .026,fontWeight: FontWeight.bold),
+                        style: GoogleFonts.poppins(
+                            fontSize: size.height * .026,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 5,),
-                Container(
-                  // width: (size.width - 200) / 2,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Don't Have an account? Register Now",
-                      style: GoogleFonts.aBeeZee(fontSize:size.height * .015,fontWeight: FontWeight.bold),
+                const SizedBox(
+                  height: 5,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.to( () => const SignUpPage(),transition: Transition.cupertino);
+                  },
+                  child: Container(
+                    // width: (size.width - 200) / 2,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Don't Have an account? Register Now",
+                        style: GoogleFonts.aBeeZee(
+                            fontSize: size.height * .015,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
