@@ -9,7 +9,7 @@ import 'package:softec_app_dev/view/Home/Profile/profile.dart';
 import 'package:softec_app_dev/view/Home/search.dart';
 
 class BottomNavigation extends StatefulWidget {
-  BottomNavigation({super.key});
+  const BottomNavigation({super.key});
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
