@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:softec_app_dev/firebase_options.dart';
-import 'package:softec_app_dev/view/homepage.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
 
-void main() async {
+import 'firebase_options.dart';
+
+void main() async  {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const OnBoardPage(),
     );
   }
 }
