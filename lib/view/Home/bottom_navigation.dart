@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Home/achivements.dart';
+import 'package:softec_app_dev/view/Home/events.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/Home/profile.dart';
 import 'package:softec_app_dev/view/Home/search.dart';
@@ -22,7 +20,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   List<Widget> list = [
     const HomePage(),
-    const Achievements(),
+    const Events(),
     const Search(),
     const Profile()
   ];
@@ -53,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 icon: LineIcons.home,
               ),
               GButton(
-                icon: LineIcons.trophy,
+                icon: LineIcons.dumbbell,
               ),
               GButton(
                 icon: LineIcons.search,
