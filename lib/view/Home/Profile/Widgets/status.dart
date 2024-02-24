@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -31,7 +32,7 @@ class Status extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(CupertinoIcons.power,color: yellowDark,size: Get.height*0.025,),
+            Icon(Icons.done_outline_sharp,color: yellowDark,size: Get.height*0.025,),
             Text('2',style: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 16),),
             Text('Done',style: GoogleFonts.aBeeZee(fontSize: 15 ),)
           ],
