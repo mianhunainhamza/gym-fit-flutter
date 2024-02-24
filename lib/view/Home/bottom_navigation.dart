@@ -5,7 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/events.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
-import 'package:softec_app_dev/view/Home/profile.dart';
+import 'package:softec_app_dev/view/Home/Profile/profile.dart';
 import 'package:softec_app_dev/view/Home/search.dart';
 
 class BottomNavigation extends StatefulWidget {
