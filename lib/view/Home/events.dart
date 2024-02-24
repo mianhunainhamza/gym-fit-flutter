@@ -49,7 +49,15 @@ class Events extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: yellowColor),
-                  height: Get.height * .25,
+                  height: 220,
+                  width: Get.width - 40,
+                  child: const WorkCard()),
+              const SizedBox(height: 30,),
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: yellowColor),
+                  height: 220,
                   width: Get.width - 40,
                   child: const WorkCard())
             ],
