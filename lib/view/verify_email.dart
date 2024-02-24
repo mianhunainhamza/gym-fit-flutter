@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
+import 'package:softec_app_dev/view/login_screen.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   final String email;
@@ -36,8 +37,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: Lottie.asset('assets/animations/reset.json'),
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Lottie.asset('assets/animations/email.json'),
             ),
             const SizedBox(
               height: 20,
@@ -50,8 +51,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: Get.height * .18,
             ),
             InkWell(
               onTap: () {
@@ -84,7 +85,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         backgroundColor: yellowColor,
         onPressed:()
         {
-          Get.offAll(BottomNavigation(),transition: Transition.cupertino);
+          Get.offAll(() => LoginScreen(),transition: Transition.cupertino);
         },
       child: const Icon(Icons.login,color: Colors.black,),),
     );
