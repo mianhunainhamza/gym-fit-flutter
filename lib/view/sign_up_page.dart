@@ -53,15 +53,31 @@ class _SignupPageState extends State<SignupPage> {
                   Row(children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                          fontSize: Get.width * 0.10,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: Get.width * 0.10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                          ),
+                          children: const [
+                            TextSpan(
+                              text: "Create ",
+                              style: TextStyle(
+                                color:Color.fromRGBO(255, 220, 138, 1) // RGB color
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Account",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
+
                   ]),
                   SizedBox(height: Get.width * 0.08),
                   SizedBox(
@@ -134,8 +150,8 @@ class _SignupPageState extends State<SignupPage> {
                         controller: passController,
                         obscureText: obscureText,
                         validator: (value) {
-                          if (value!.trim().length < 6) {
-                            return 'Password must be at least 6 characters long';
+                          if (value!.trim().length < 8) {
+                            return 'Password must be at least 8 characters long';
                           }
                           return null;
                         },
@@ -171,32 +187,35 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   SizedBox(height:Get.width * 0.04),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 33,right: 33),
-                    child: DropdownButtonFormField<String>(
-                      validator: (value){
-                        if(value == null){
-                          return "Choose a Role";
-                        }
-                        if(value.isEmpty){
-                          return "Choose a Role";
-                        }
-                        return null;
-                      },
-                      value: selectedRole,
-                      hint: const Text('Choose Role'),
-                      items: <String>['Fitness Enthusiast', 'Fitness Professional']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                            selectedRole = value;
-                        });
-                      },
+                  SizedBox(
+                    height: Get.height * .1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 33,right: 33),
+                      child: DropdownButtonFormField<String>(
+                        validator: (value){
+                          if(value == null){
+                            return "Choose a Role";
+                          }
+                          if(value.isEmpty){
+                            return "Choose a Role";
+                          }
+                          return null;
+                        },
+                        value: selectedRole,
+                        hint: const Text('Choose Role'),
+                        items: <String>['Fitness Enthusiast', 'Fitness Professional']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                              selectedRole = value;
+                          });
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(height: Get.width * 0.15),
@@ -292,7 +311,7 @@ class _SignupPageState extends State<SignupPage> {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.createUserWithEmailAndPassword(email: email, password: pass);
-      Get.offAll(const HomePage());
+      Get.offAll(const HomePage(),transition: Transition.cupertino);
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }
