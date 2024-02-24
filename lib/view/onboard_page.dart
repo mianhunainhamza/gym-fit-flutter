@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OnBoardPage extends StatelessWidget {
-  const OnBoardPage({super.key});
+  const OnBoardPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,9 @@ class OnBoardPage extends StatelessWidget {
         children: [
           Column(
             children: [
-              //
               const SizedBox(
                 height: 30,
               ),
-
               Padding(
                 padding: const EdgeInsets.only(left: 40),
                 child: SizedBox(
@@ -31,7 +30,7 @@ class OnBoardPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: size.height * 0.055,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromRGBO(253, 220, 138, 1), // Set default color
+                        color: const Color.fromRGBO(253, 220, 138, 1),
                       ),
                       children: [
                         const TextSpan(
@@ -39,23 +38,69 @@ class OnBoardPage extends StatelessWidget {
                         ),
                         TextSpan(
                           text: 'GET FIT',
-                          style: TextStyle(color: Colors.black.withOpacity(.7)), // Set black color for "GET FIT"
+                          style: TextStyle(color: Colors.black.withOpacity(.7)),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-
             ],
           ),
-          //image
-          Container(
-            decoration: const BoxDecoration(
+          // Image
+          SizedBox(
+            width: size.width,
+            height: size.height - 300,
+            child: Image.asset('assets/images/girl.png', fit: BoxFit.fitHeight),
+          ),
+
+          // Buttons
+          Positioned(
+            left: 60, // Adjust position according to your preference
+            right: 60, // Adjust position according to your preference
+            bottom: 20,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: size.width,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Container(
+                    // width: (size.width - 200) / 2,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(253, 215, 138, 1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'L O G I N',
+                        style: GoogleFonts.poppins(fontSize: size.height * .026,fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5,),
+                Container(
+                  // width: (size.width - 200) / 2,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Don't Have an account? Register Now",
+                      style: GoogleFonts.aBeeZee(fontSize:size.height * .015,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
             ),
-              width: size.width,
-              height: size.height-300,
-              child: Image.asset('assets/images/girl.png',fit: BoxFit.fitHeight,)),
+          ),
         ],
       ),
     );
