@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
@@ -17,16 +18,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   automaticallyImplyLeading: false,
-      //   elevation: 0.0,
-      //   leading: InkWell(
-      //       onTap: () {
-      //         Get.back();
-      //       },
-      //       child: const Icon(Icons.arrow_back_ios_new)),
-      // ),
+
       body: Padding(
         padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
         child: Form(
@@ -97,32 +89,41 @@ class LoginScreen extends StatelessWidget {
                     height: Get.height * 0.11,
                   child: SizedBox(
                     height: Get.height * 0.1,
-                    child: TextFormField(
-                      validator: (text) {
-                        if (text == null) {
-                          return 'Null';
-                        }
-                        if (text.isEmpty) {
-                          return 'Required Field';
-                        }
-                        if (text.length < 8) {
-                          return 'Password Invalid';
-                        }
-                        return null;
-                      },
-                      controller: controller.passController.value,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        prefixIcon: const Icon(CupertinoIcons.lock),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(20),
+                    child: Obx(
+                        ()=> TextFormField(
+                        validator: (text) {
+                          if (text == null) {
+                            return 'Null';
+                          }
+                          if (text.isEmpty) {
+                            return 'Required Field';
+                          }
+                          if (text.length < 8) {
+                            return 'Password Invalid';
+                          }
+                          return null;
+                        },
+                        controller: controller.passController.value,
+                        obscureText: controller.isObscure.value,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your password',
+                          prefixIcon: const Icon(CupertinoIcons.lock),
+                          suffixIcon: GestureDetector(
+                              onTap: (){
+                                controller.changeObscure();
+                              },
+                              child: controller.isObscure.value?
+                              const Icon(Icons.visibility_off):
+                              const Icon(Icons.visibility)),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ),
@@ -196,7 +197,7 @@ class LoginScreen extends StatelessWidget {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.signInWithEmailAndPassword(email: email, password: pass);
-      Get.to(const HomePage());
+      Get.to(BottomNavigation(),transition: Transition.cupertino);
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }

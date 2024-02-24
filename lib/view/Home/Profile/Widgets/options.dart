@@ -50,7 +50,7 @@ class Options extends StatelessWidget {
           },
           leading: const Icon(Icons.help_outline),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('Help',style: GoogleFonts.aBeeZee(),),
+          title: Text('Terms and Conditions',style: GoogleFonts.aBeeZee(),),
         ),
         ListTile(
           onTap: (){

@@ -1,17 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pedometer/pedometer.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Statistics extends StatefulWidget {
-  const Statistics({Key? key}) : super(key: key);
+  const Statistics({super.key});
+
 
   @override
-  StatisticsState createState() => StatisticsState();
+  _StatisticsState createState() => _StatisticsState();
 }
 
-class StatisticsState extends State<Statistics> {
+class _StatisticsState extends State<Statistics> {
   late Stream<StepCount> _stepCountStream;
   int _steps = 0;
 
@@ -38,72 +40,39 @@ class StatisticsState extends State<Statistics> {
     _stepCountStream = Pedometer.stepCountStream;
 
     // Listen to streams and handle errors
-    _stepCountStream.listen(onStepCount, onError: onStepCountError);
+    _stepCountStream.listen(onStepCount).onError(onStepCountError);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<_SalesData> data = [
-      _SalesData('Jan', 35),
-      _SalesData('Feb', 28),
-      _SalesData('Mar', 34),
-      _SalesData('Apr', 32),
-      _SalesData('May', 40)
-    ];
-
     return Scaffold(
       appBar: AppBar(
+        title: Text('Statistics',style: GoogleFonts.poppins(fontWeight: FontWeight.bold),),
+        centerTitle: true,
         automaticallyImplyLeading: false,
-        leading: GestureDetector(
-          onTap: () {
+        leading: IconButton(
+          onPressed: () {
             Get.back();
           },
-          child: const Icon(Icons.arrow_back_ios_new),
-        ),
-        centerTitle: true,
-        title: Text(
-          'Stats',
-          style: GoogleFonts.poppins(
-            fontSize: Get.height * 0.03,
-            fontWeight: FontWeight.bold,
-          ),
+          icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Steps Count:',
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            '$_steps',
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: Get.height * .6, // Adjust height according to your needs
-            width: Get.width,
-            child: SfCircularChart(
-              series: <CircularSeries<_SalesData, String>>[
-                RadialBarSeries<_SalesData, String>(
-                  radius: '50%',
-                  dataSource: data,
-                  xValueMapper: (_SalesData sales, _) => sales.year,
-                  yValueMapper: (_SalesData sales, _) => sales.sales,
-                  dataLabelSettings: const DataLabelSettings(isVisible: true),
-                ),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Steps Count:',
+              style: TextStyle(fontSize: 20),
             ),
-          ),
-        ],
+            Text(
+              '$_steps',
+              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _SalesData {
-  _SalesData(this.year, this.sales);
-
-  final String year;
-  final double sales;
-}
