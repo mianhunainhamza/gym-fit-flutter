@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/Model/user_model.dart';
-import 'package:softec_app_dev/view/homepage.dart';
+import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
 
 class SignupPage extends StatefulWidget {
