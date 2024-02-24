@@ -1,4 +1,4 @@
-# softec_app_dev
+# Gym Fit
 
 A new project for the softec competition.
 
