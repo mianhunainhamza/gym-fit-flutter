@@ -74,7 +74,7 @@ class OnBoardPage extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: (){
-                      Get.to(LoginScreen(),transition: Transition.cupertino);
+                      Get.to(() => LoginScreen(),transition: Transition.cupertino);
                     },
                     child: Container(
                       // width: (size.width - 200) / 2,
