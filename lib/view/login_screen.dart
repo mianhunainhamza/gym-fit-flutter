@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:softec_app_dev/view/homepage.dart';
+import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
 
