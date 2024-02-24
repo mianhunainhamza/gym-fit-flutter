@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -141,9 +142,12 @@ class LoginScreen extends StatelessWidget {
 
                 // Sign in button
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if(controller.key.value.currentState!.validate()){
-                      print('Done');
+                      String email = controller.emailController.value.text;
+                      String pass = controller.passController.value.text;
+                      await  _signUpWithEmailAndPassword(email,pass);
+                      print('Success');
                     }
                   },
                   child: Container(
@@ -156,7 +160,8 @@ class LoginScreen extends StatelessWidget {
                           child: Text('L O G I N',
                               style: GoogleFonts.poppins(
                                   fontSize: Get.height * 0.026,
-                                  fontWeight: FontWeight.bold)))),
+                                  fontWeight: FontWeight.bold)))
+                  ),
                 ),
                  SizedBox(
                   height: Get.height * 0.04,
@@ -183,5 +188,14 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _signUpWithEmailAndPassword(email,pass) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.signInWithEmailAndPassword(email: email, password: pass);
+    } on Exception catch (e) {
+      Get.snackbar('Auth Error', e.toString());
+    }
   }
 }
