@@ -20,7 +20,6 @@ class SignUpPage extends StatelessWidget {
       body: Column(
         children: [
           Image.asset('assets/images/girl.png'),
-          Image.asset('assets/images/girl.png'),
         ],
       ),
     );
