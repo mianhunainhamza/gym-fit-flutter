@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/view/login_screen.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
 
 class OnBoardPage extends StatelessWidget {
@@ -30,7 +31,7 @@ class OnBoardPage extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        fontSize: Get.height * .055,
+                        fontSize: size.height * 0.055,
                         fontWeight: FontWeight.bold,
                         color: const Color.fromRGBO(253, 220, 138, 1),
                       ),
@@ -71,19 +72,24 @@ class OnBoardPage extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: Container(
-                    // width: (size.width - 200) / 2,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(253, 215, 138, 1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'L O G I N',
-                        style: GoogleFonts.poppins(
-                            fontSize: size.height * .026,
-                            fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.to(LoginScreen(),transition: Transition.cupertino);
+                    },
+                    child: Container(
+                      // width: (size.width - 200) / 2,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(253, 215, 138, 1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'L O G I N',
+                          style: GoogleFonts.poppins(
+                              fontSize: size.height * .026,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

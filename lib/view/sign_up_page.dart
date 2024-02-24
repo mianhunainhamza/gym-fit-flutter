@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/view/homepage.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
 
@@ -171,6 +174,15 @@ class _SignupPageState extends State<SignupPage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 33,right: 33),
                     child: DropdownButtonFormField<String>(
+                      validator: (value){
+                        if(value == null){
+                          return "Choose a Role";
+                        }
+                        if(value.isEmpty){
+                          return "Choose a Role";
+                        }
+                        return null;
+                      },
                       value: selectedRole,
                       hint: const Text('Choose Role'),
                       items: <String>['Fitness Enthusiast', 'Fitness Professional']
@@ -182,7 +194,7 @@ class _SignupPageState extends State<SignupPage> {
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          selectedRole = value;
+                            selectedRole = value;
                         });
                       },
                     ),
@@ -234,26 +246,33 @@ class _SignupPageState extends State<SignupPage> {
                               );
                             },
                           );
-                        } else {
-                          HomePage();
                         }
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20, left: 20),
-                      child: Container(
-                        width: Get.width,
-                        height: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromRGBO(253, 215, 138, 1),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'CREATE ACCOUNT',
-                            style: GoogleFonts.poppins(
-                              fontSize: Get.height * 0.026,
-                              fontWeight: FontWeight.bold,
+                      child: InkWell(
+                        onTap: () async {
+                          if(_formKey.currentState!.validate()){
+                            createUser(emailController.text,passController.text);
+                            addUser(emailController.text,passController.text,
+                                    nameController.text, selectedRole);
+                          }
+                        },
+                        child: Container(
+                          width: Get.width,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromRGBO(253, 215, 138, 1),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'CREATE ACCOUNT',
+                              style: GoogleFonts.poppins(
+                                fontSize: Get.height * 0.026,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -267,5 +286,27 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  Future<void> createUser(email,pass) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.createUserWithEmailAndPassword(email: email, password: pass);
+      Get.offAll(const HomePage());
+    } on Exception catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
+
+  }
+
+  Future<void> addUser(email,pass, name, role) async {
+    try {
+      final cloud = FirebaseFirestore.instance;
+      CollectionReference ref = cloud.collection('Users');
+      UserModel user = UserModel(username: name, pass: pass, email: email, role: role);
+      ref.add(user.toJson());
+    } on Exception catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
   }
 }
