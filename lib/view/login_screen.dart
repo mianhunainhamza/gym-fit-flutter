@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
@@ -149,23 +150,29 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (controller.key.value.currentState!.validate()) {
+                      controller.loadingTrue();
                       String email = controller.emailController.value.text;
                       String pass = controller.passController.value.text;
                       await _signUpWithEmailAndPassword(email, pass);
-                      print('Success');
+                      controller.loadingFalse();
                     }
                   },
-                  child: Container(
-                      width: Get.width,
-                      height: 55,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromRGBO(253, 215, 138, 1)),
-                      child: Center(
-                          child: Text('L O G I N',
-                              style: GoogleFonts.poppins(
-                                  fontSize: Get.height * 0.026,
-                                  fontWeight: FontWeight.bold)))),
+                  child: Obx( ()=>
+                    Container(
+                        width: Get.width,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromRGBO(253, 215, 138, 1)),
+                        child: Center(
+                            child: controller.isLoading.value?
+                                const CircularProgressIndicator(color: Colors.black,) :
+                            Text('L O G I N',
+                                style: GoogleFonts.poppins(
+                                    fontSize: Get.height * 0.026,
+                                    fontWeight: FontWeight.bold))
+                        ) ),
+                  ),
                 ),
                 SizedBox(
                   height: Get.height * 0.04,
@@ -199,8 +206,9 @@ class LoginScreen extends StatelessWidget {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.signInWithEmailAndPassword(email: email, password: pass);
-      Get.to(BottomNavigation(), transition: Transition.cupertino);
+      Get.offAll(const BottomNavigation(), transition: Transition.cupertino);
     } on Exception catch (e) {
+      controller.loadingFalse();
       Get.snackbar('Error', e.toString());
     }
   }
