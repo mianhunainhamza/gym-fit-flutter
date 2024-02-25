@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Home/chat.dart';
 import 'package:softec_app_dev/view/Home/community.dart';
 import 'package:softec_app_dev/view/Home/events.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
@@ -22,7 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   List<Widget> list = [
     const HomePage(),
     const Events(),
-    const CommunityPage(),
+    const Chat(),
     const Search(),
     const Profile()
   ];
@@ -46,7 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             gap: 8,
             color: Colors.black.withOpacity(0.3),
             activeColor: yellowDark,
-            iconSize: Get.width * 0.08,
+            iconSize: Get.width * 0.07,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             tabs: const [
               GButton(

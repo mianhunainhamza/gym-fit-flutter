@@ -18,7 +18,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: Padding(
         padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
         child: Form(
@@ -28,20 +27,24 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: Get.height * 0.06,),
+                SizedBox(
+                  height: Get.height * 0.06,
+                ),
                 SizedBox(
                     height: Get.height * .35,
                     child: Lottie.asset('assets/animations/dumble.json')),
 
-                 Align(
+                Align(
                   alignment: Alignment.center,
                   child: Text(
                     'Welcome to Health Life',
-                    style: GoogleFonts.poppins(fontSize: Get.height * 0.034, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: Get.height * 0.034,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
-                  height: Get.height * .05 ,
+                  height: Get.height * .05,
                 ),
 
                 // Email
@@ -81,16 +84,16 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: Get.height * .01 ,
+                  height: Get.height * .01,
                 ),
 
                 // Password
                 SizedBox(
-                    height: Get.height * 0.11,
+                  height: Get.height * 0.11,
                   child: SizedBox(
                     height: Get.height * 0.1,
                     child: Obx(
-                        ()=> TextFormField(
+                      () => TextFormField(
                         validator: (text) {
                           if (text == null) {
                             return 'Null';
@@ -109,12 +112,12 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'Enter your password',
                           prefixIcon: const Icon(CupertinoIcons.lock),
                           suffixIcon: GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 controller.changeObscure();
                               },
-                              child: controller.isObscure.value?
-                              const Icon(Icons.visibility_off):
-                              const Icon(Icons.visibility)),
+                              child: controller.isObscure.value
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility)),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.black),
@@ -130,7 +133,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
 
-
                 // Forget Password
                 const Align(
                     alignment: Alignment.centerRight,
@@ -140,16 +142,16 @@ class LoginScreen extends StatelessWidget {
                     )),
 
                 SizedBox(
-                  height: Get.height * .03 ,
+                  height: Get.height * .03,
                 ),
 
                 // Sign in button
                 GestureDetector(
                   onTap: () async {
-                    if(controller.key.value.currentState!.validate()){
+                    if (controller.key.value.currentState!.validate()) {
                       String email = controller.emailController.value.text;
                       String pass = controller.passController.value.text;
-                      await  _signUpWithEmailAndPassword(email,pass);
+                      await _signUpWithEmailAndPassword(email, pass);
                       print('Success');
                     }
                   },
@@ -163,10 +165,9 @@ class LoginScreen extends StatelessWidget {
                           child: Text('L O G I N',
                               style: GoogleFonts.poppins(
                                   fontSize: Get.height * 0.026,
-                                  fontWeight: FontWeight.bold)))
-                  ),
+                                  fontWeight: FontWeight.bold)))),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: Get.height * 0.04,
                 ),
                 Row(
@@ -177,7 +178,8 @@ class LoginScreen extends StatelessWidget {
                     // Navigate to SignUp
                     InkWell(
                         onTap: () {
-                          Get.to(const SignupPage(),transition: Transition.cupertino);
+                          Get.to(const SignupPage(),
+                              transition: Transition.cupertino);
                         },
                         child: const Text(
                           '  Register Now',
@@ -193,11 +195,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _signUpWithEmailAndPassword(email,pass) async {
+  Future<void> _signUpWithEmailAndPassword(email, pass) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
       await auth.signInWithEmailAndPassword(email: email, password: pass);
-      Get.to(BottomNavigation(),transition: Transition.cupertino);
+      Get.to(BottomNavigation(), transition: Transition.cupertino);
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
     }
