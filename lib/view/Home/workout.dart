@@ -3,12 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/view/Home/work_card.dart';
 import '../../utils/colors.dart';
 
 class WorkOutPage extends StatefulWidget {
-  const WorkOutPage({Key? key}) : super(key: key);
+  final Callback function;
+  const WorkOutPage({Key? key, required this.function}) : super(key: key);
 
   @override
   WorkOutPageState createState() => WorkOutPageState();
@@ -106,7 +108,7 @@ class WorkOutPageState extends State<WorkOutPage> {
             height: 220,
             width: Get.width - 40,
             child: WorkCard(
-              function: fetchUserJoinedEvents,
+              function: widget.function,
               isJoined: isJoined,
               title: title,
               type: type,
