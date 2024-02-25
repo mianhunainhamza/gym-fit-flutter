@@ -268,9 +268,8 @@ class _SignupPageState extends State<SignupPage> {
                         }
                         else
                           {
-                            createUser(emailController.text,passController.text);
-                            addUser(emailController.text,passController.text,
-                                nameController.text, selectedRole);
+                            createUser(emailController.text,passController.text,nameController.text, selectedRole);
+
                           }
                       }
                     },
@@ -304,27 +303,30 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Future<void> createUser(email,pass) async {
+  Future<UserCredential?> createUser(email,pass,name,role) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
-      await auth.createUserWithEmailAndPassword(email: email, password: pass);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: pass);
       Get.offAll( VerifyEmailPage(email: email),transition: Transition.cupertino);
-    } on Exception catch (e) {
-      Get.snackbar('Error', e.toString());
-    }
-
-  }
-
-  Future<void> addUser(email,pass, name, role) async {
-    try {
       User? user = FirebaseAuth.instance.currentUser;
       final cloud = FirebaseFirestore.instance;
-      CollectionReference ref = cloud.collection('Users');
+      cloud.collection('Users').doc(userCredential.user!.uid).set({
+        'uid':userCredential.user!.uid,
+        'email':email,
+        'name' :name,
+        'role':role,
+        'pass':pass
+      });
       await user?.sendEmailVerification();
-      UserModel users = UserModel(username: name, pass: pass, email: email, role: role);
-      ref.add(users.toJson());
+      return userCredential;
+      // UserModel users = UserModel(username: name, pass: pass, email: email, role: role);
+      // ref.add(users.toJson());
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString());
+      return null;
     }
+
   }
+
+
 }
