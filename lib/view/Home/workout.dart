@@ -5,20 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/view/Home/work_card.dart';
-import 'package:softec_app_dev/view/Home/workout.dart';
-
 import '../../utils/colors.dart';
 
-class Events extends StatefulWidget {
-  const Events({Key? key}) : super(key: key);
+class WorkOutPage extends StatefulWidget {
+  const WorkOutPage({Key? key}) : super(key: key);
 
   @override
-  EventsState createState() => EventsState();
+  WorkOutPageState createState() => WorkOutPageState();
 }
 
-class EventsState extends State<Events> {
+class WorkOutPageState extends State<WorkOutPage> {
   bool _isDataLoaded = false;
-  final List<Map<String, dynamic>> _userJoinedEvents = [];
   final List<Map<String, dynamic>> _allEvents = [];
 
   @override
@@ -34,30 +31,28 @@ class EventsState extends State<Events> {
     if (currentUserUid != null) {
       final eventsSnapshot = await FirebaseFirestore.instance.collection('events').get();
 
-      _userJoinedEvents.clear();
       _allEvents.clear();
 
       for (var eventDoc in eventsSnapshot.docs) {
         final eventData = eventDoc.data();
         if (eventData['joinedUsers'] != null && eventData['joinedUsers'].contains(currentUserUid)) {
-          _userJoinedEvents.add(eventData);
+          // _userJoinedEvents.add(eventData);
         } else {
           _allEvents.add(eventData);
         }
-      }
 
       setState(() {
         _isDataLoaded = true;
       });
     }
-  }
+  }}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Workout",
+          "Plans",
           style: GoogleFonts.poppins(
             fontSize: Get.height * .03,
             fontWeight: FontWeight.w600,
@@ -68,35 +63,6 @@ class EventsState extends State<Events> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Workout Plan',
-                  style: GoogleFonts.poppins(
-                    fontSize: Get.height * .023,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: ()
-                  {
-                    Get.to(() => const WorkOutPage(),transition: Transition.cupertino);
-                  },
-                  child: Text(
-                    'See more',
-                    style: GoogleFonts.poppins(
-                      fontSize: Get.height * .018,
-                      fontWeight: FontWeight.w600,
-                      color: yellowDark,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 20),
           Expanded(
             child: _isDataLoaded
@@ -104,51 +70,11 @@ class EventsState extends State<Events> {
               color: yellowDark,
               onRefresh: fetchUserJoinedEvents,
               child: ListView.builder(
-                itemCount: _allEvents.isEmpty ? 0 : 1,
+                itemCount: _allEvents.length,
                 itemBuilder: (context, index) {
-                  // Check if _allEvents is not empty before accessing the first item
-                  if (_allEvents.isNotEmpty) {
-                    final event = _allEvents.first;
-                    return buildWorkCard(
-                      false,
-                      event['title'],
-                      event['type'],
-                      event['calories'].toString(),
-                      event['time'].toString(),
-                      event['body'],
-                    );
-                  } else {
-                    // If _allEvents is empty, return a placeholder widget or null
-                    return  Text('No New Plan',
-                    style: GoogleFonts.poppins()); // or return null;
-                  }
-                },
-              ),
-
-            )
-                : Center(child: CircularProgressIndicator(color: yellowDark)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Text(
-              'Your Plans',
-              style: GoogleFonts.poppins(
-                fontSize: Get.height * .023,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Expanded(
-            child: _isDataLoaded
-                ? RefreshIndicator(
-              color: yellowDark,
-              onRefresh: fetchUserJoinedEvents,
-              child: ListView.builder(
-                itemCount: _userJoinedEvents.length,
-                itemBuilder: (context, index) {
-                  final event = _userJoinedEvents[index];
+                  final event = _allEvents[index];
                   return buildWorkCard(
-                    true,
+                    false,
                     event['title'],
                     event['type'],
                     event['calories'].toString(),
