@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (controller.key.value.currentState!.validate()) {
-                      if(await isVerified(controller.emailController.value.toString()))
+                      if(await isVerified(controller.emailController.value.text.trim()))
                         {
                           controller.loadingTrue();
                           String email = controller.emailController.value.text.trim();
