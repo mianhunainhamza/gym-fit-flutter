@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Home/community.dart';
 import 'package:softec_app_dev/view/Home/events.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/Home/Profile/profile.dart';
@@ -21,6 +22,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   List<Widget> list = [
     const HomePage(),
     const Events(),
+    const CommunityPage(),
     const Search(),
     const Profile()
   ];
@@ -52,6 +54,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
               GButton(
                 icon: LineIcons.dumbbell,
+              ),
+              GButton(
+                icon: Icons.people_outline,
               ),
               GButton(
                 icon: LineIcons.search,
