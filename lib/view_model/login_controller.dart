@@ -7,9 +7,18 @@ class LoginController extends GetxController {
   Rx<TextEditingController> passController = TextEditingController().obs;
   Rx<GlobalKey<FormState>> key = GlobalKey<FormState>().obs;
   RxBool isObscure = true.obs;
+  RxBool isLoading = false.obs;
 
   changeObscure(){
     isObscure.value = !isObscure.value;
+  }
+
+  loadingFalse(){
+    isLoading.value = false;
+  }
+
+  loadingTrue(){
+    isLoading.value = true;
   }
 
 
