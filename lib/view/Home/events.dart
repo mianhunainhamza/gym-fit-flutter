@@ -83,7 +83,7 @@ class EventsState extends State<Events> {
                 GestureDetector(
                   onTap: ()
                   {
-                    Get.to(() => const WorkOutPage(),transition: Transition.cupertino);
+                    Get.to(() => WorkOutPage(function: fetchUserJoinedEvents,),transition: Transition.cupertino);
                   },
                   child: Text(
                     'See more',
