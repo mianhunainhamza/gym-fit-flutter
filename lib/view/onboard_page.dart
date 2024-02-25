@@ -54,7 +54,11 @@ class OnBoardPage extends StatelessWidget {
           SizedBox(
             width: size.width,
             height: size.height - 300,
-            child: Image.asset('assets/images/girl.png', fit: BoxFit.fitHeight,filterQuality: FilterQuality.high,),
+            child: Image.asset(
+              'assets/images/girl.png',
+              fit: BoxFit.fitHeight,
+              filterQuality: FilterQuality.high,
+            ),
           ),
 
           // Buttons
@@ -73,8 +77,9 @@ class OnBoardPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: GestureDetector(
-                    onTap: (){
-                      Get.to(() => LoginScreen(),transition: Transition.cupertino);
+                    onTap: () {
+                      Get.to(() => LoginScreen(),
+                          transition: Transition.cupertino);
                     },
                     child: Container(
                       // width: (size.width - 200) / 2,
@@ -99,7 +104,8 @@ class OnBoardPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to( () => const SignupPage(),transition: Transition.cupertino);
+                    Get.to(() => const SignupPage(),
+                        transition: Transition.cupertino);
                   },
                   child: Container(
                     // width: (size.width - 200) / 2,

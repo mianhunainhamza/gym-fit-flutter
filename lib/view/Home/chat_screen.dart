@@ -1,6 +1,9 @@
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/view/Home/chat_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -78,9 +81,14 @@ class _ChatScreenState extends State<ChatScreen> {
       return Container();
     }
 
-    final String senderEmail = data['senderEmail'] ?? '';
+    // final String senderEmail = data['senderEmail'] ?? '';
     final String message = data['message'] ?? '';
     final String senderId = data['senderId'] ?? '';
+    final Timestamp time = data['timeStamp'] ?? '';
+
+    final DateTime date = time.toDate();
+    String formattedDateTime = DateFormat('hh:mm a').format(date);
+    time.seconds;
 
     final bool isCurrentUserSender = senderId == _auth.currentUser!.uid;
     final Alignment alignment =
@@ -88,32 +96,54 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Container(
       alignment: alignment,
-      child: Column(
-        children: [
-          Text(message),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              message,
+              style: GoogleFonts.poppins(
+                fontSize: Get.width * 0.045,
+              ),
+            ),
+            Text(
+              formattedDateTime,
+              style: GoogleFonts.poppins(
+                fontSize: Get.width * 0.03,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget buildMessageInput(receiver, user) {
-    return Row(
-      children: [
-        Expanded(
-            child: TextField(
-          controller: messageController,
-          decoration: const InputDecoration(hintText: 'Enter message'),
-        )),
-        IconButton(
-            onPressed: () async {
-              await sendMessage();
-              print(
-                  '------------------------------- User here-------------------------');
-              print(receiver);
-              print(user);
-            },
-            icon: const Icon(Icons.arrow_upward))
-      ],
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 5, 10),
+      child: Row(
+        children: [
+          Expanded(
+              child: TextField(
+            controller: messageController,
+            decoration: InputDecoration(
+              hintText: 'Enter message',
+              hintStyle: GoogleFonts.poppins(fontSize: Get.width * 0.05),
+              border: InputBorder.none,
+            ),
+          )),
+          IconButton(
+              onPressed: () async {
+                await sendMessage();
+                print(
+                    '------------------------------- User here-------------------------');
+                print(receiver);
+                print(user);
+              },
+              icon: const Icon(Icons.arrow_upward))
+        ],
+      ),
     );
   }
 }
