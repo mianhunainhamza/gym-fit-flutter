@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
+import 'package:softec_app_dev/view/verify_email.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -150,11 +152,18 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (controller.key.value.currentState!.validate()) {
-                      controller.loadingTrue();
-                      String email = controller.emailController.value.text;
-                      String pass = controller.passController.value.text;
-                      await _signUpWithEmailAndPassword(email, pass);
-                      controller.loadingFalse();
+                      if(await isVerified(controller.emailController.value.toString()))
+                        {
+                          controller.loadingTrue();
+                          String email = controller.emailController.value.text.trim();
+                          String pass = controller.passController.value.text.trim();
+                          await _signUpWithEmailAndPassword(email, pass);
+                          controller.loadingFalse();
+                        }
+                      else
+                        {
+                          showVerificationDialog(context,controller.emailController.value.text.toString());
+                        }
                     }
                   },
                   child: Obx( ()=>
@@ -201,6 +210,47 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<bool> isVerified(String email) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      await user.reload();
+      user = auth.currentUser;
+      return user?.emailVerified ?? false;
+    } else {
+      return false;
+    }
+  }
+ void showVerificationDialog(BuildContext context,String email) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title:const  Text('Email Verification Required'),
+            content:const  Text('Please verify your email to proceed.'),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.pop(context, false); // Cancel button
+                },
+                child: const Text('Cancel',style: TextStyle(color: Colors.black),),
+              ),
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VerifyEmailPage(email: email)),
+                  );
+                },
+                child:  Text('Verify Email',style: TextStyle(color: yellowDark),),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
   Future<void> _signUpWithEmailAndPassword(email, pass) async {
     try {

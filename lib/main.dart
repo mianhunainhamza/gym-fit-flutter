@@ -1,11 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
-import 'package:softec_app_dev/view/Home/chat.dart';
-import 'package:softec_app_dev/view/login_screen.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
-import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
