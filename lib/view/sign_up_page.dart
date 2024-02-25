@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
 import 'package:softec_app_dev/view/verify_email.dart';
 
@@ -27,6 +26,7 @@ class _SignupPageState extends State<SignupPage> {
   bool userNameWrong = false;
   bool tickMark = false;
   String? selectedRole;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -243,11 +243,19 @@ class _SignupPageState extends State<SignupPage> {
                       )
                     ],
                   ),
+
+                  //
                   SizedBox(height: Get.width * 0.15),
                   GestureDetector(
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          isLoading = true;
+                        });
                         if (!tickMark) {
+                          setState(() {
+                            isLoading = false;
+                          });
                           showCupertinoDialog(
                             context: context,
                             builder: (context) {
@@ -283,7 +291,8 @@ class _SignupPageState extends State<SignupPage> {
                           color: const Color.fromRGBO(253, 215, 138, 1),
                         ),
                         child: Center(
-                          child: Text(
+                          child: isLoading ? const CircularProgressIndicator(color: Colors.black,):
+                          Text(
                             'CREATE ACCOUNT',
                             style: GoogleFonts.poppins(
                               fontSize: Get.height * 0.026,
@@ -319,9 +328,10 @@ class _SignupPageState extends State<SignupPage> {
       });
       await user?.sendEmailVerification();
       return userCredential;
-      // UserModel users = UserModel(username: name, pass: pass, email: email, role: role);
-      // ref.add(users.toJson());
     } on Exception catch (e) {
+      setState(() {
+        isLoading = false;
+      });
       Get.snackbar('Error', e.toString());
       return null;
     }
