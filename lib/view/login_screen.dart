@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
-import 'package:softec_app_dev/view/Home/homepage.dart';
 import 'package:softec_app_dev/view/sign_up_page.dart';
 import 'package:softec_app_dev/view/verify_email.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
@@ -152,18 +150,11 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (controller.key.value.currentState!.validate()) {
-                      if(await isVerified(controller.emailController.value.text.trim()))
-                        {
                           controller.loadingTrue();
                           String email = controller.emailController.value.text.trim();
                           String pass = controller.passController.value.text.trim();
                           await _signUpWithEmailAndPassword(email, pass);
                           controller.loadingFalse();
-                        }
-                      else
-                        {
-                          showVerificationDialog(context,controller.emailController.value.text.toString());
-                        }
                     }
                   },
                   child: Obx( ()=>

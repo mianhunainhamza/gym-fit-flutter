@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Home/chat_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -91,30 +92,79 @@ class _ChatScreenState extends State<ChatScreen> {
     time.seconds;
 
     final bool isCurrentUserSender = senderId == _auth.currentUser!.uid;
-    final Alignment alignment =
-        isCurrentUserSender ? Alignment.centerRight : Alignment.centerLeft;
 
-    return Container(
-      alignment: alignment,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              message,
-              style: GoogleFonts.poppins(
-                fontSize: Get.width * 0.045,
-              ),
+    return isCurrentUserSender ?
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: yellowDark,
+              borderRadius: BorderRadius.circular(8.0),
             ),
-            Text(
-              formattedDateTime,
-              style: GoogleFonts.poppins(
-                fontSize: Get.width * 0.03,
-              ),
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  formattedDateTime,
+                  style: GoogleFonts.poppins(
+                    fontSize: Get.width * 0.025,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  message,
+                  style: GoogleFonts.poppins(
+                    fontSize: Get.width * 0.046,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    ):Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(.3),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  message,
+                  style: GoogleFonts.poppins(
+                    fontSize: Get.width * 0.046,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  formattedDateTime,
+                  style: GoogleFonts.poppins(
+                    fontSize: Get.width * 0.025,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

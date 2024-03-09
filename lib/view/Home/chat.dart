@@ -40,7 +40,7 @@ class _ChatState extends State<Chat> {
           return const Text('Error');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Waiting...');
+          return CircularProgressIndicator(color: yellowColor,);
         }
         if (snapshot.hasData) {
           return ListView(

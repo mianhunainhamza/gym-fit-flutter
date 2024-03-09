@@ -27,7 +27,7 @@ class ChatService extends ChangeNotifier {
 
     await firebaseFirestore
         .collection('chat_room')
-        .doc(chatRoomId)
+        .doc('1')
         .collection('message')
         .add(newMessage.toMap());
   }
@@ -40,9 +40,9 @@ class ChatService extends ChangeNotifier {
 
     return firebaseFirestore
         .collection('chat_room')
-        .doc(chatRoomId)
+        .doc('1')
         .collection('message')
-        // .orderBy('timestamp', descending: false)
+        .orderBy('timeStamp', descending: false)
         .snapshots();
   }
 }
