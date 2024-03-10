@@ -10,7 +10,7 @@ class ChatService extends ChangeNotifier {
   Future<void> sendMessage(String receiverId, String messages) async {
     final String? currentUserId = _firebaseAuth.currentUser?.uid;
     final String? currentUserEmail =
-        _firebaseAuth.currentUser?.email.toString();
+    _firebaseAuth.currentUser?.email.toString();
     final Timestamp timestamp = Timestamp.now();
 
     Message newMessage = Message(
@@ -21,26 +21,28 @@ class ChatService extends ChangeNotifier {
         timeStamp: timestamp);
 
     List<String?> ids = [currentUserId, receiverId];
+    ids.sort(); // Sort the IDs alphabetically
 
     String chatRoomId = ids.join("_");
     print(chatRoomId);
 
     await firebaseFirestore
         .collection('chat_room')
-        .doc('1')
+        .doc(chatRoomId) // Use the generated chat room ID
         .collection('message')
         .add(newMessage.toMap());
   }
-  // GCVkDmCgNyMhVwbtuFSXBAxpvWs2_AEQv0pEJrLTh4PHziOZBJkcE5243
 
   Stream<QuerySnapshot> getMessage(userId, otherUserId) {
     List<String> ids = [otherUserId, userId];
+    ids.sort(); // Sort the IDs alphabetically
+
     String chatRoomId = ids.join("_");
     print(chatRoomId);
 
     return firebaseFirestore
         .collection('chat_room')
-        .doc('1')
+        .doc(chatRoomId) // Use the generated chat room ID
         .collection('message')
         .orderBy('timeStamp', descending: false)
         .snapshots();
