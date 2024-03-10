@@ -5,18 +5,31 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Authentication/sign_up_page.dart';
+import 'package:softec_app_dev/view/Authentication/verify_email.dart';
 import 'package:softec_app_dev/view/Home/bottom_navigation.dart';
-import 'package:softec_app_dev/view/sign_up_page.dart';
-import 'package:softec_app_dev/view/verify_email.dart';
 import 'package:softec_app_dev/view_model/login_controller.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final controller = Get.put(LoginController());
 
   @override
+  void dispose(){
+    super.dispose();
+    controller.clearFields();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -214,6 +227,7 @@ class LoginScreen extends StatelessWidget {
       return false;
     }
   }
+
  void showVerificationDialog(BuildContext context,String email) {
       showDialog(
         context: context,

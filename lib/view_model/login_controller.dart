@@ -21,5 +21,10 @@ class LoginController extends GetxController {
     isLoading.value = true;
   }
 
+  clearFields() {
+    emailController.value.clear();
+    passController.value.clear();
+  }
+
 
 }

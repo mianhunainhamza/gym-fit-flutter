@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Home/chat_service.dart';
+import 'chat_service.dart';
 
 class ChatScreen extends StatefulWidget {
   final String rUserId;

@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/view/Home/Profile/Functions/help.dart';
 import 'package:softec_app_dev/view/Home/Profile/Functions/setttings.dart';
 import 'package:softec_app_dev/view/Home/Profile/Functions/statistics.dart';
-import 'package:softec_app_dev/view/login_screen.dart';
+import 'package:softec_app_dev/view/Authentication/login_screen.dart';
 
 import '../Functions/notifications.dart';
 

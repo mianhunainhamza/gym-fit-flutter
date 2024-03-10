@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:softec_app_dev/view/login_screen.dart';
-import 'package:softec_app_dev/view/sign_up_page.dart';
+import 'package:softec_app_dev/view/Authentication/login_screen.dart';
+import 'package:softec_app_dev/view/Authentication/sign_up_page.dart';
 
 class OnBoardPage extends StatelessWidget {
   const OnBoardPage({super.key});

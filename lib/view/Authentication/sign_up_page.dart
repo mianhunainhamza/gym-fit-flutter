@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/view/Authentication/verify_email.dart';
 import 'package:softec_app_dev/view/onboard_page.dart';
-import 'package:softec_app_dev/view/verify_email.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);

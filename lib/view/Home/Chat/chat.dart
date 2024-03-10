@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Home/chat_screen.dart';
+import 'package:softec_app_dev/view/Home/Chat/chat_screen.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -56,13 +56,13 @@ class _ChatState extends State<Chat> {
 
   Widget _buildUserListItem(DocumentSnapshot? document) {
     if (document == null || !document.exists) {
-      return const SizedBox(); // Return an empty SizedBox if document is null or doesn't exist
+      return const SizedBox();
     }
 
     final data = document.data() as Map<String, dynamic>?;
 
     if (data == null || _auth.currentUser?.email == data['email']) {
-      return const SizedBox(); // Return an empty SizedBox if data is null or current user's email matches
+      return const SizedBox();
     }
 
     return ListTile(

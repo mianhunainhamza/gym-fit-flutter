@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/login_screen.dart';
+import 'package:softec_app_dev/view/Authentication/login_screen.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   final String email;

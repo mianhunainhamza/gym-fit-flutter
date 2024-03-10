@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Home/chat.dart';
+import 'package:softec_app_dev/view/Home/Chat/chat.dart';
 import 'package:softec_app_dev/view/Home/community.dart';
 import 'package:softec_app_dev/view/Home/events.dart';
 import 'package:softec_app_dev/view/Home/homepage.dart';
