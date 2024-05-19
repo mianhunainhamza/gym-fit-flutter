@@ -50,7 +50,7 @@ dependencies:
   flutter_native_splash: ^2.3.10
   flutter_launcher_icons: ^0.13.1
   image_picker: ^1.0.7
-  intl: ^0.18.1
+  intl: 
   uuid: ^4.3.3
   shimmer: ^3.0.0
   google_fonts: 6.0.0
