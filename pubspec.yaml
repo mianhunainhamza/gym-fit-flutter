@@ -39,6 +39,7 @@ dependencies:
   zego_uikit_prebuilt_live_streaming: ^3.3.1
   syncfusion_flutter_charts: ^24.2.7+1
   get: ^4.6.6
+  shared_preferences: ^2.2.3
   lottie: ^3.1.0
   google_nav_bar: ^5.0.6
   line_icons: ^2.0.3

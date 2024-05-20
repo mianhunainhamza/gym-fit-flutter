@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Authentication/login_screen.dart';
 import '../Features//help.dart';
 import '../Features/notifications.dart';
@@ -68,20 +69,26 @@ class Options extends StatelessWidget {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text("Sure want to logout?",style: GoogleFonts.poppins(fontSize: 17)),
+          title: Text("Sure want to logout?", style: GoogleFonts.poppins(fontSize: 17)),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Cancel',style: GoogleFonts.poppins(color: Colors.black)),
+              child: Text('Cancel', style: GoogleFonts.poppins(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
             ),
             CupertinoDialogAction(
-              child: Text('OK',style: GoogleFonts.poppins(color: Colors.red),),
+              child: Text('OK', style: GoogleFonts.poppins(color: Colors.red)),
               onPressed: () async {
                 FirebaseAuth auth = FirebaseAuth.instance;
                 await auth.signOut();
-                Get.offAll(LoginScreen(),transition: Transition.cupertino);
+
+                // Clear the login state
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('isLoggedIn', false);
+
+                // Navigate to login screen
+                Get.offAll(() => LoginScreen(), transition: Transition.cupertino);
               },
             ),
           ],

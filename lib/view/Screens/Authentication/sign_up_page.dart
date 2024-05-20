@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/utils/utils.dart';
 import 'package:softec_app_dev/view/Screens/Authentication/verify_email.dart';
 import 'package:softec_app_dev/view/Screens/OnBoard/onboard_page.dart';
 
@@ -348,7 +349,7 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {
         isLoading = false;
       });
-      Get.snackbar('Error', e.toString());
+      Utils().showMessage(context,"'Error ${e.toString()}", Colors.red);
       return null;
     }
   }
