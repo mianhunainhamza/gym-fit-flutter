@@ -6,7 +6,6 @@ import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Screens/Shopping/shopping_page.dart';
 import 'package:softec_app_dev/view/Screens/Work/events.dart';
 import 'Chat/chat.dart';
-import 'Home/Feed/feed.dart';
 import 'Home/homepage.dart';
 import 'Profile/profile.dart';
 
