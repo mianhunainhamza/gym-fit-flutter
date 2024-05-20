@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Screens/Shopping/cart_page.dart';
 import 'dart:convert';
 import "package:velocity_x/velocity_x.dart";
@@ -44,7 +45,7 @@ class ShoppingPageState extends State<ShoppingPage> {
     return Scaffold(
       appBar: AppBar(title:  const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text("Trending Products")),titleTextStyle: const TextStyle(fontWeight: FontWeight.w400,color: Colors.black,fontSize: 25),centerTitle: false,),
+          child: Text("Trending Products")),titleTextStyle: const TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: 25),centerTitle: false,),
         floatingActionButton: VxBuilder(
             mutations: const {AddMutation, RemoveMutation},
             builder: (context, MyStore, none) {
@@ -56,12 +57,12 @@ class ShoppingPageState extends State<ShoppingPage> {
                 backgroundColor: MyTheme.darkBlusihColor,
                 child: const Icon(
                   CupertinoIcons.cart,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ).badge(
                   size: 20,
                   count: cart.items.length,
-                  color: (context.theme.colorScheme.primary),
+                  color: yellowDark,
                   textStyle: TextStyle(
                       color: (context.canvasColor),
                       fontSize: 12,

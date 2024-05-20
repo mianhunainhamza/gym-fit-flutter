@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../core/store.dart';
 import '../../../model/cart.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/theme.dart';
 
 class CartPage extends StatelessWidget {
@@ -43,12 +45,12 @@ class _CardTotal extends StatelessWidget {
           30.widthBox,
           ElevatedButton(
               onPressed: (){
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: "Buying not supported yet".text.white.make()));
+                Utils().showMessage(context,'Buying not supported yet',Colors.red);
               },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(MyTheme.darkBlusihColor),
             shape: MaterialStateProperty.all(const StadiumBorder())
-          ), child: "Buy".text.xl2.white.make(),).wh(90, 45)
+          ), child: "Buy".text.xl2.black.fontWeight(FontWeight.w300).make(),).wh(90, 45)
         ],
       ),
     );
@@ -67,7 +69,7 @@ class _CartList extends StatelessWidget {
             leading: const Icon(Icons.done),
             trailing: IconButton(
               icon: const Icon(Icons.remove_circle_outline), onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: "Item has been removed".text.white.make()));
+              Utils().showMessage(context,'Item has been Removed',yellowDark);
                 RemoveMutation(_cart.items[index]);
             },
             ),

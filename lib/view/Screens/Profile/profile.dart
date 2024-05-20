@@ -102,8 +102,8 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
         return Column(
           children: [
             SizedBox(
-              height: Get.height * 0.16,
-              width: Get.height * 0.16,
+              height: Get.height * 0.14,
+              width: Get.height * 0.14,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),

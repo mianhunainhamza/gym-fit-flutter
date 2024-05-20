@@ -48,7 +48,7 @@ class CatalogItem extends StatelessWidget {
                   alignment: MainAxisAlignment.spaceBetween,
                   children: [
                     "Rs ${catalog.prices}".text.lg.bold.make(),
-                    AddToCart(catalog: catalog).wh(50,40)
+                    AddToCart(catalog: catalog).wh(70,40)
                   ],).pOnly(right: 8)
               ],))],
         )

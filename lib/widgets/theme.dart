@@ -4,7 +4,7 @@ import '../utils/colors.dart';
 final ThemeData theme = ThemeData();
 class MyTheme {
   static ThemeData lightTheme(BuildContext context) => ThemeData(
-      colorScheme: theme.colorScheme.copyWith(secondary: MyTheme.darkBlusihColor,primary: Colors.grey),
+      colorScheme: theme.colorScheme.copyWith(secondary: MyTheme.darkBlusihColor,primary: Colors.black),
       fontFamily: GoogleFonts.poppins().fontFamily,
       cardColor: Colors.white,
       canvasColor: creamColor,
@@ -30,7 +30,7 @@ class MyTheme {
         appBarTheme: const AppBarTheme(
             color: Colors.black,
             elevation: 0.0,
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: IconThemeData(color: Colors.black),
             titleTextStyle:
                 TextStyle(color: Colors.white, fontWeight: FontWeight.bold)));
   }
@@ -40,8 +40,8 @@ class MyTheme {
     bool isDarkTheme = theme.brightness == Brightness.dark;
     return isDarkTheme;
   }
-  static Color creamColor= yellowDark;
-  static Color darkcreamColor= yellowDark;
-  static Color  darkBlusihColor= yellowDark;
-  static Color  lightBlusihColor= yellowDark;
+  static Color creamColor= yellowColor;
+  static Color darkcreamColor= yellowColor;
+  static Color  darkBlusihColor= yellowColor;
+  static Color  lightBlusihColor= yellowColor;
 }
