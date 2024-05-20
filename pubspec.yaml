@@ -54,6 +54,7 @@ dependencies:
   uuid: ^4.3.3
   shimmer: ^3.0.0
   google_fonts: 6.0.0
+  fluttertoast: ^8.2.5
 
 dev_dependencies:
   flutter_test:

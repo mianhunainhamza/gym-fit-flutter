@@ -64,8 +64,9 @@ class _SignupPageState extends State<SignupPage> {
                             TextSpan(
                               text: "Create ",
                               style: TextStyle(
-                                color:Color.fromRGBO(255, 220, 138, 1) // RGB color
-                              ),
+                                  color: Color.fromRGBO(
+                                      255, 220, 138, 1) // RGB color
+                                  ),
                             ),
                             TextSpan(
                               text: "Account",
@@ -77,7 +78,6 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
-
                   ]),
                   SizedBox(height: Get.width * 0.08),
                   SizedBox(
@@ -118,7 +118,8 @@ class _SignupPageState extends State<SignupPage> {
                       child: TextFormField(
                         controller: emailController,
                         validator: (value) {
-                          if (value!.trim().isEmpty || !value.trim().contains('@')) {
+                          if (value!.trim().isEmpty ||
+                              !value.trim().contains('@')) {
                             return 'Please enter a valid email address';
                           }
                           return null;
@@ -186,25 +187,27 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height:Get.width * 0.04),
+                  SizedBox(height: Get.width * 0.04),
                   SizedBox(
                     height: Get.height * .1,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 33,right: 33),
+                      padding: const EdgeInsets.only(left: 33, right: 33),
                       child: DropdownButtonFormField<String>(
-                        validator: (value){
-                          if(value == null){
+                        validator: (value) {
+                          if (value == null) {
                             return "Choose a Role";
                           }
-                          if(value.isEmpty){
+                          if (value.isEmpty) {
                             return "Choose a Role";
                           }
                           return null;
                         },
                         value: selectedRole,
                         hint: const Text('Choose Role'),
-                        items: <String>['Fitness Enthusiast', 'Fitness Professional']
-                            .map((String value) {
+                        items: <String>[
+                          'Fitness Enthusiast',
+                          'Fitness Professional'
+                        ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -212,7 +215,7 @@ class _SignupPageState extends State<SignupPage> {
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                              selectedRole = value;
+                            selectedRole = value;
                           });
                         },
                       ),
@@ -231,7 +234,7 @@ class _SignupPageState extends State<SignupPage> {
                         child: tickMark
                             ? const Icon(CupertinoIcons.check_mark)
                             : const Icon(CupertinoIcons.square,
-                            color: CupertinoColors.inactiveGray),
+                                color: CupertinoColors.inactiveGray),
                       ),
                       const Text(" I've read and agree to "),
                       const Text(
@@ -260,8 +263,8 @@ class _SignupPageState extends State<SignupPage> {
                             context: context,
                             builder: (context) {
                               return CupertinoAlertDialog(
-                                title: const Text(
-                                    "Agree to Terms and Conditions"),
+                                title:
+                                    const Text("Agree to Terms and Conditions"),
                                 actions: [
                                   CupertinoDialogAction(
                                     child: const Text("OK"),
@@ -273,12 +276,10 @@ class _SignupPageState extends State<SignupPage> {
                               );
                             },
                           );
+                        } else {
+                          createUser(emailController.text, passController.text,
+                              nameController.text, selectedRole);
                         }
-                        else
-                          {
-                            createUser(emailController.text,passController.text,nameController.text, selectedRole);
-
-                          }
                       }
                     },
                     child: Padding(
@@ -291,14 +292,17 @@ class _SignupPageState extends State<SignupPage> {
                           color: const Color.fromRGBO(253, 215, 138, 1),
                         ),
                         child: Center(
-                          child: isLoading ? const CircularProgressIndicator(color: Colors.black,):
-                          Text(
-                            'CREATE ACCOUNT',
-                            style: GoogleFonts.poppins(
-                              fontSize: Get.height * 0.026,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.black,
+                                )
+                              : Text(
+                                  'CREATE ACCOUNT',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: Get.height * 0.026,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -312,16 +316,18 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Future<UserCredential?> createUser(email,pass,name,role) async {
+  Future<UserCredential?> createUser(email, pass, name, role) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: pass);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: pass);
       User? user = userCredential.user;
 
       await user?.updateDisplayName(name);
 
       // Navigate to the email verification page
-      Get.offAll(VerifyEmailPage(email: email), transition: Transition.cupertino);
+      Get.offAll(VerifyEmailPage(email: email),
+          transition: Transition.cupertino);
 
       // Store user data in Firestore
       final cloud = FirebaseFirestore.instance;
@@ -330,7 +336,8 @@ class _SignupPageState extends State<SignupPage> {
         'email': email,
         'name': name,
         'role': role,
-        'pass': pass
+        'pass': pass,
+        'profilePicUrl': '',
       });
 
       // Send email verification
@@ -344,8 +351,5 @@ class _SignupPageState extends State<SignupPage> {
       Get.snackbar('Error', e.toString());
       return null;
     }
-
   }
-
-
 }

@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../utils/utils.dart';
 import 'Widgets/options.dart';
 import 'Widgets/status.dart';
 
@@ -56,8 +62,19 @@ class Profile extends StatelessWidget {
   }
 }
 
-class _UserProfileInfo extends StatelessWidget {
+class _UserProfileInfo extends StatefulWidget {
   const _UserProfileInfo({Key? key}) : super(key: key);
+
+  @override
+  State<_UserProfileInfo> createState() => _UserProfileInfoState();
+}
+
+class _UserProfileInfoState extends State<_UserProfileInfo> {
+  File? image;
+  final imagePicker = ImagePicker();
+
+  final firestore = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -90,17 +107,30 @@ class _UserProfileInfo extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100000),
-                    border: Border.all(
-                      color: Colors.grey,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      pickGalleryImage();
+                      uploadProfilePic();
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100000),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  child: const Icon(
-                    Icons.camera_alt_outlined,
-                    size: 32,
-                    color: Colors.grey,
+                    child: userData['profilePicUrl'].toString().isNotEmpty
+                        ? Image.network(
+                            userData['profilePicUrl'],
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                          )
+                        : const Icon(
+                            Icons.add_a_photo_rounded,
+                            size: 28,
+                          ),
                   ),
                 ),
               ),
@@ -122,5 +152,60 @@ class _UserProfileInfo extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future pickGalleryImage() async {
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedImage != null) {
+        image = File(pickedImage.path);
+        Utils().showMessage(
+            context, "Image picked", Theme.of(context).colorScheme.secondary);
+      } else {
+        Utils().showMessage(context, "No image was picked",
+            Theme.of(context).colorScheme.error);
+      }
+    });
+  }
+
+  void uploadProfilePic() async {
+    if (image != null) {
+      try {
+        final userId = FirebaseAuth.instance.currentUser!.uid;
+
+        await storage.ref('/ProfileImages/$userId.jpg').delete();
+
+        final storageRef = storage.ref('/ProfileImages/$userId.jpg');
+        final uploadTask = storageRef.putFile(image!.absolute);
+
+        Future.value(uploadTask).then((value) async {
+          var newUrl = await storageRef.getDownloadURL();
+
+          await firestore.collection('users').doc(userId).update({
+            'profilePicUrl': newUrl,
+          }).then((value) {
+            Utils().showMessage(
+              context,
+              "Profile picture updated.",
+              Colors.green,
+            );
+          }).onError((error, stackTrace) {
+            Utils().showMessage(
+                context, error.toString(), Theme.of(context).colorScheme.error);
+          });
+        }).onError((error, stackTrace) {});
+      } catch (e) {
+        Utils().showMessage(
+          context,
+          "Sorry. We can't update your profile picture at the moment.",
+          Theme.of(context).colorScheme.error,
+        );
+      }
+    } else {
+      Utils().showMessage(
+          context, "Please select image", Theme.of(context).colorScheme.error);
+    }
   }
 }
