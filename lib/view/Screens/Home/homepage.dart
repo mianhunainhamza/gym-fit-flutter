@@ -29,12 +29,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getName();
+    getProfilePic();
     fetchUserJoinedEvents();
     posts = feedController.getPosts();
   }
 
   Future<void> refresh() async {
     getName();
+
     fetchUserJoinedEvents();
     posts = feedController.getPosts();
   }
@@ -51,14 +53,16 @@ class _HomePageState extends State<HomePage> {
     final currentUserUid = user?.uid;
 
     if (currentUserUid != null) {
-      final eventsSnapshot = await FirebaseFirestore.instance.collection('events').get();
+      final eventsSnapshot =
+          await FirebaseFirestore.instance.collection('events').get();
 
       userJoinedEvents.clear();
       allEvents.clear();
 
       for (var eventDoc in eventsSnapshot.docs) {
         final eventData = eventDoc.data();
-        if (eventData['joinedUsers'] != null && eventData['joinedUsers'].contains(currentUserUid)) {
+        if (eventData['joinedUsers'] != null &&
+            eventData['joinedUsers'].contains(currentUserUid)) {
           setState(() {
             userJoinedEvents.add(eventData);
           });
@@ -94,6 +98,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  String profilePicUrl =
+      'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg';
+
+  Future<String> getProfilePic() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Get the document snapshot corresponding to the current user's UID
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get();
+
+      // Get the 'profilePicUrl' field from the document
+      setState(() {
+        profilePicUrl = snapshot.get('profilePicUrl');
+      });
+      return profilePicUrl;
+    } else {
+      return 'pic';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +134,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -138,8 +164,9 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20000),
                           ),
-                          child: Image.asset(
-                            "assets/images/dp.jpg",
+                          child: Image.network(
+                            profilePicUrl,
+                            fit: BoxFit.cover,
                             filterQuality: FilterQuality.high,
                           ),
                         ),
@@ -148,34 +175,39 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
-            SizedBox(
-              width: Get.width,
-              height: Get.height * 0.31,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: allEvents.isEmpty ? 1 : allEvents.length,
-                itemBuilder: (context, index) {
-                  if (allEvents.isEmpty) {
-                    return SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: const Center(child: Text("No New Events",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)));
-                  } else {
-                    final event = allEvents[index];
-                    return buildWorkCard(
-                      fetchUserJoinedEvents,
-                      false,
-                      event['title'],
-                      event['type'],
-                      event['calories'].toString(),
-                      event['time'].toString(),
-                      event['body'],
-                    );
-                  }
-                },
-              ),
-            )
-                ,Padding(
-                  padding:const  EdgeInsets.symmetric(horizontal: 15),
+                SizedBox(
+                  width: Get.width,
+                  height: Get.height * 0.31,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: allEvents.isEmpty ? 1 : allEvents.length,
+                    itemBuilder: (context, index) {
+                      if (allEvents.isEmpty) {
+                        return SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: const Center(
+                                child: Text(
+                              "No New Events",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            )));
+                      } else {
+                        final event = allEvents[index];
+                        return buildWorkCard(
+                          fetchUserJoinedEvents,
+                          false,
+                          event['title'],
+                          event['type'],
+                          event['calories'].toString(),
+                          event['time'].toString(),
+                          event['body'],
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Divider(
                     thickness: 3,
                     color: yellowDark,
@@ -183,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: Get.height * 0.04),
                 Padding(
-                  padding:const  EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     "Featured Trainers",
                     style: GoogleFonts.poppins(
@@ -201,23 +233,26 @@ class _HomePageState extends State<HomePage> {
                     child: FutureBuilder<Map<String, String>>(
                       future: fetchProfessionalData(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Shimmer.fromColors(
                             baseColor: Colors.grey[300]!,
                             highlightColor: Colors.grey[100]!,
                             child: Row(
-                              children: List.generate(4, (index) => trainerSkeleton()),
+                              children: List.generate(
+                                  4, (index) => trainerSkeleton()),
                             ),
                           );
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else {
-                          final Map<String, String> professionals = snapshot.data!;
+                          final Map<String, String> professionals =
+                              snapshot.data!;
                           return ListView.builder(
                             itemCount: snapshot.data!.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              return  Row(
+                              return Row(
                                 children: [
                                   Column(
                                     children: [
@@ -225,13 +260,13 @@ class _HomePageState extends State<HomePage> {
                                         width: Get.width * 0.21,
                                         height: Get.width * 0.21,
                                         decoration: const BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(2000)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(2000)),
                                           image: DecorationImage(
                                             filterQuality: FilterQuality.high,
                                             fit: BoxFit.fitHeight,
-                                            image:
-                                            AssetImage("assets/images/trainer.jpg"),
+                                            image: AssetImage(
+                                                "assets/images/trainer.jpg"),
                                           ),
                                         ),
                                       ),
@@ -257,15 +292,13 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: Get.height * 0.025),
 
-
                 Padding(
-                  padding:const  EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Divider(
                     thickness: 3,
                     color: yellowDark,
                   ),
                 ),
-
 
                 SizedBox(height: Get.height * 0.018),
                 // Padding(
@@ -357,7 +390,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:const  EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         "Explore",
                         style: GoogleFonts.poppins(
