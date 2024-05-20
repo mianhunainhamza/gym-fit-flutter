@@ -113,11 +113,10 @@ class EventsState extends State<Events> {
                       itemCount: _allEvents.isEmpty ? 1 : 1,
                       itemBuilder: (context, index) {
                         if (_allEvents.isEmpty) {
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: buildWorkCardSkeleton(),
-                          );
+                          return SizedBox(
+                            height: 200,
+                              width: MediaQuery.of(context).size.width,
+                              child: const Center(child: Text("No New Events",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),)));
                         } else {
                           final event = _allEvents.first;
                           return buildWorkCard(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Screens/Shopping/shopping_page.dart';
 import 'package:softec_app_dev/view/Screens/Work/events.dart';
 import 'Chat/chat.dart';
 import 'Home/Feed/feed.dart';
@@ -23,7 +24,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     const HomePage(),
     const Events(),
     const Chat(),
-    const Feed(),
+    const ShoppingPage(),
     const Profile()
   ];
 
@@ -59,7 +60,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 icon: Icons.people_outline,
               ),
               GButton(
-                icon: LineIcons.newspaper,
+                icon: LineIcons.shoppingCart,
               ),
               GButton(
                 icon: LineIcons.user,
