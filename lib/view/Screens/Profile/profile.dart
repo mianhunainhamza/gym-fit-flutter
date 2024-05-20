@@ -76,7 +76,8 @@ class _UserProfileInfo extends StatelessWidget {
         }
 
         if (!snapshot.hasData || !snapshot.data!.exists) {
-          return const Text('User data not found'); // Handle the case where user data doesn't exist
+          return const Text(
+              'User data not found'); // Handle the case where user data doesn't exist
         }
 
         final userData = snapshot.data!.data() as Map<String, dynamic>;
@@ -85,9 +86,23 @@ class _UserProfileInfo extends StatelessWidget {
           children: [
             SizedBox(
               height: Get.height * 0.16,
+              width: Get.height * 0.16,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.asset('assets/images/trainer.jpg'),
+                borderRadius: BorderRadius.circular(100000),
+                // child: Image.asset('assets/images/trainer.jpg'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100000),
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.camera_alt_outlined,
+                    size: 32,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: Get.height * 0.025),
