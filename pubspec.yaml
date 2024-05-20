@@ -54,6 +54,7 @@ dependencies:
   uuid: ^4.3.3
   shimmer: ^3.0.0
   google_fonts: 6.0.0
+  velocity_x: ^4.1.2
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +90,7 @@ flutter:
   assets:
       - assets/images/
       - assets/animations/
+      - assets/files/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
