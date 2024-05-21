@@ -4,7 +4,8 @@ Future<Map<String, String>> fetchProfessionalData() async {
   final firestore = FirebaseFirestore.instance;
 
   try {
-    final querySnapshot = await firestore.collection('users')
+    final querySnapshot = await firestore
+        .collection('users')
         .where('role', isEqualTo: 'Fitness Professional')
         .get();
 
@@ -14,12 +15,15 @@ Future<Map<String, String>> fetchProfessionalData() async {
 
     final Map<String, String> fitnessProfessionals = {};
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       final String name = doc['name'];
       final String uid = doc.id;
-      fitnessProfessionals[name] = uid;
-    });
-
+      final String profilePicUrl = doc['profilePicUrl'];
+      fitnessProfessionals[name] = profilePicUrl;
+      print("uid: $uid");
+      // fitnessProfessionals[profilePicUrl] = profilePicUrl;
+    }
+    print("fitnessProfessionals: $fitnessProfessionals");
     return fitnessProfessionals;
   } catch (e) {
     print('Error fetching Fitness Professionals: $e');

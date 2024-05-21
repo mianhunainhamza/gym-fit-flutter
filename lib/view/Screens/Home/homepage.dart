@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/main.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
@@ -259,19 +260,35 @@ class _HomePageState extends State<HomePage> {
                                       Container(
                                         width: Get.width * 0.21,
                                         height: Get.width * 0.21,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(2000)),
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(2000),
+                                          ),
                                           image: DecorationImage(
                                             filterQuality: FilterQuality.high,
                                             fit: BoxFit.fitHeight,
-                                            image: AssetImage(
-                                                "assets/images/trainer.jpg"),
+                                            image: NetworkImage(
+                                              professionals.values
+                                                  .elementAt(index),
+                                            ),
                                           ),
+                                        ),
+                                        child: Center(
+                                          child: professionals.values
+                                                  .elementAt(index)
+                                                  .toString()
+                                                  .isEmpty
+                                              ? Icon(
+                                                  Icons.person,
+                                                  color: Colors.black,
+                                                  size: Get.width * 0.09,
+                                                )
+                                              : Container(),
                                         ),
                                       ),
                                       SizedBox(height: Get.height * 0.015),
                                       Text(
+                                        // professionals.entries.indexed(index, )
                                         professionals.keys.elementAt(index),
                                         style: GoogleFonts.poppins(
                                           fontSize: Get.width * 0.04,
