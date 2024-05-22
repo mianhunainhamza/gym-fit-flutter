@@ -1,14 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:softec_app_dev/utils/colors.dart';
 import '../../../utils/utils.dart';
 import 'Widgets/options.dart';
 import 'Widgets/status.dart';
@@ -105,33 +109,60 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
               height: Get.height * 0.14,
               width: Get.height * 0.14,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(100000),
+                // borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      pickGalleryImage();
-                      uploadProfilePic();
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100000),
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    child: userData['profilePicUrl'].toString().isNotEmpty
-                        ? Image.network(
-                            userData['profilePicUrl'],
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.high,
-                          )
-                        : const Icon(
-                            Icons.add_a_photo_rounded,
-                            size: 28,
-                          ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100000),
+                    // border: Border.all(
+                    //   color: Colors.grey,
+                    // ),
                   ),
+                  child: userData['profilePicUrl'].toString().isNotEmpty
+                      ? Stack(
+                          alignment: AlignmentDirectional.center,
+                          fit: StackFit.expand,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10000),
+                              child: Image.network(
+                                userData['profilePicUrl'],
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                            Positioned(
+                              top: 3,
+                              right: 5,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    pickGalleryImage();
+                                    uploadProfilePic();
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: yellowDark,
+                                      borderRadius:
+                                          BorderRadius.circular(1000)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(2.0),
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : const Icon(
+                          Icons.add_a_photo_rounded,
+                          size: 28,
+                        ),
                 ),
               ),
             ),
