@@ -90,11 +90,7 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // Show a loader while data is being fetched
-        }
-
-        if (snapshot.hasError) {
+         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
 
@@ -113,58 +109,31 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
               child: ClipRRect(
                 // borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100000),
-                    // border: Border.all(
-                    //   color: Colors.grey,
-                    // ),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      pickGalleryImage();
+                      uploadProfilePic();
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100000),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    child: userData['profilePicUrl'].toString().isNotEmpty
+                        ? Image.network(
+                            userData['profilePicUrl'],
+                            fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                          )
+                        : const Icon(
+                            Icons.add_a_photo_rounded,
+                            size: 28,
+                          ),
                   ),
-                  child: userData['profilePicUrl'].toString().isNotEmpty
-                      ? Stack(
-                          alignment: AlignmentDirectional.center,
-                          fit: StackFit.expand,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10000),
-                              child: Image.network(
-                                userData['profilePicUrl'],
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            ),
-                            Positioned(
-                              top: 3,
-                              right: 5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    pickGalleryImage();
-                                    uploadProfilePic();
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: yellowDark,
-                                      borderRadius:
-                                          BorderRadius.circular(1000)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(2.0),
-                                    child: Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                      size: 22,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : const Icon(
-                          Icons.add_a_photo_rounded,
-                          size: 28,
-                        ),
                 ),
               ),
             ),
@@ -207,10 +176,17 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
     if (image != null) {
       try {
         final userId = FirebaseAuth.instance.currentUser!.uid;
-
-        await storage.ref('/ProfileImages/$userId.jpg').delete();
-
         final storageRef = storage.ref('/ProfileImages/$userId.jpg');
+
+        // Attempt to delete the existing image, if it exists
+        try {
+          await storageRef.delete();
+        } catch (e) {
+          // If the image does not exist, we ignore the error and continue
+          print('No existing image to delete, or another error occurred: $e');
+        }
+
+        // Upload the new image
         final uploadTask = storageRef.putFile(image!.absolute);
 
         Future.value(uploadTask).then((value) async {
@@ -226,9 +202,18 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
             );
           }).onError((error, stackTrace) {
             Utils().showMessage(
-                context, error.toString(), Theme.of(context).colorScheme.error);
+                context,
+                error.toString(),
+                Theme.of(context).colorScheme.error
+            );
           });
-        }).onError((error, stackTrace) {});
+        }).onError((error, stackTrace) {
+          Utils().showMessage(
+              context,
+              error.toString(),
+              Theme.of(context).colorScheme.error
+          );
+        });
       } catch (e) {
         Utils().showMessage(
           context,
@@ -238,7 +223,11 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
       }
     } else {
       Utils().showMessage(
-          context, "Please select image", Theme.of(context).colorScheme.error);
+          context,
+          "Please select an image",
+          Theme.of(context).colorScheme.error
+      );
     }
   }
+
 }
