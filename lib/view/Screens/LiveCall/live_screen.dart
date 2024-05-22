@@ -31,8 +31,8 @@ class _LivePageState extends State<LivePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ZegoUIKitPrebuiltLiveStreaming(
-        appID: 402059029,
-        appSign: '8d1a5aceb09a3162ba90de4456c4a6e571b086a6b91f33c55bc2303c8a2ad0d9',
+        appID: 1153874272,
+        appSign: '97dfa67a28c646830aeeb8e1673d26a5d842a829fe3d747f379e30088ae149c7',
         userID: userId ?? "default",
         userName: '$userName',
         liveID: widget.liveID,

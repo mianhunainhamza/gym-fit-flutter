@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart';
@@ -7,7 +8,7 @@ class MyTheme {
       colorScheme: theme.colorScheme.copyWith(secondary: MyTheme.darkBlusihColor,primary: Colors.black),
       fontFamily: GoogleFonts.poppins().fontFamily,
       cardColor: Colors.white,
-      canvasColor: creamColor,
+      canvasColor: CupertinoColors.white,
       buttonTheme: ButtonThemeData(
           buttonColor: lightBlusihColor
       ),
@@ -22,7 +23,7 @@ class MyTheme {
     return ThemeData(
       cardColor: Colors.black,
         colorScheme: theme.colorScheme.copyWith(primary: creamColor,secondary: Colors.white, brightness: Brightness.dark),
-        canvasColor: darkcreamColor,
+        canvasColor: CupertinoColors.white,
         fontFamily: GoogleFonts.lato().fontFamily,
         buttonTheme: ButtonThemeData(
           buttonColor: darkBlusihColor
