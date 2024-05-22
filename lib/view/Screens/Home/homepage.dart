@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/utils/colors.dart';
 import 'package:softec_app_dev/view/Screens/LiveCall/live_sessions.dart';
 import 'package:softec_app_dev/view/Screens/Work/fetch_event.dart';
@@ -27,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> userJoinedEvents = [];
   final List<Map<String, dynamic>> allEvents = [];
   late Future<List<PostModel>> posts;
-  List<UserModel> users = [];
 
   @override
   void initState() {
@@ -77,8 +75,6 @@ class _HomePageState extends State<HomePage> {
       }
     }
   }
-
-  
 
   Widget trainerSkeleton() {
     return Container(
@@ -408,25 +404,30 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                        Text(
-                          "Explore",
-                          style: GoogleFonts.poppins(
-                            fontSize: Get.width * 0.06,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        GestureDetector(
-                            onTap: ()
-                            {
-                              Navigator.push(context, CupertinoPageRoute(builder: (c) => const LiveSession()));
-                            },
-                            child: const Icon(Icons.live_tv,size: 30,))
-                      ]),
+                            Text(
+                              "Explore",
+                              style: GoogleFonts.poppins(
+                                fontSize: Get.width * 0.06,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (c) => const LiveSession()));
+                                },
+                                child: const Icon(
+                                  Icons.live_tv,
+                                  size: 30,
+                                ))
+                          ]),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: newFeed(posts, users),
+                      child: newFeed(posts),
                     ),
                   ],
                 ),

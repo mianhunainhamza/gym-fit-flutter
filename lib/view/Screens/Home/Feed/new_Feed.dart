@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:softec_app_dev/Model/user_model.dart';
 import '../../../../model/post.dart';
 import 'image_preview.dart';
 
-Widget newFeed(Future<List<PostModel>> posts, List<UserModel> users) {
+Widget newFeed(Future<List<PostModel>> posts) {
   return FutureBuilder<List<PostModel>>(
     future: posts,
     builder: (context, snapshot) {
