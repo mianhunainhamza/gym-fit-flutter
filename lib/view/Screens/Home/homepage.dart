@@ -35,13 +35,11 @@ class _HomePageState extends State<HomePage> {
     getName();
     getProfilePic();
     fetchUserJoinedEvents();
-    fetchUsers();
     posts = feedController.getPosts();
   }
 
   Future<void> refresh() async {
     getName();
-    fetchUsers();
     fetchUserJoinedEvents();
     posts = feedController.getPosts();
   }
