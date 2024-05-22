@@ -185,14 +185,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: allEvents.isEmpty ? 1 : allEvents.length,
                     itemBuilder: (context, index) {
                       if (allEvents.isEmpty) {
-                        return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: const Center(
-                                child: Text(
-                              "No New Events",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            )));
+                        return buildWorkCardSkeleton();
                       } else {
                         final event = allEvents[index];
                         return buildWorkCard(
