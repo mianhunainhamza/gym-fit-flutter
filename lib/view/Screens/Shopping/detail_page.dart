@@ -50,11 +50,11 @@ class DetailPage extends StatelessWidget {
                             .color(context.theme.colorScheme.secondary)
                             .xl4
                             .make(),
-                        catalog.desc.text.xl
-                            .textStyle(context.captionStyle)
-                            .make()
-                            .py(5),
-                        "Ipsum vero takimata stet dolor clita vero dolor et diam sanctus. Dolor et et lorem diam labore sit. Justo et sea diam accusam ipsum et.vero dolor et diam sanctus. Dolor et et lorem diam labore sit. Justo et sea diam accusam ipsum et"
+                        // catalog.desc.text.xl
+                        //     .textStyle(context.captionStyle)
+                        //     .make()
+                        //     .py(5),
+                            catalog.desc
                             .text.textStyle(context.captionStyle)
                             .make().p20(),
                         10.heightBox,

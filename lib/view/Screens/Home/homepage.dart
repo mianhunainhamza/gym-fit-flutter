@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/utils/colors.dart';
-import 'package:softec_app_dev/view/Screens/Home/Feed/fetch_users_posts.dart';
+import 'package:softec_app_dev/view/Screens/LiveCall/live_sessions.dart';
 import 'package:softec_app_dev/view/Screens/Work/fetch_event.dart';
 import '../../../model/post.dart';
 import '../../../view_model/feed_controller.dart';
@@ -189,14 +190,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: allEvents.isEmpty ? 1 : allEvents.length,
                     itemBuilder: (context, index) {
                       if (allEvents.isEmpty) {
-                        return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: const Center(
-                                child: Text(
-                              "No New Events",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            )));
+                        return buildWorkCardSkeleton();
                       } else {
                         final event = allEvents[index];
                         return buildWorkCard(
@@ -263,8 +257,8 @@ class _HomePageState extends State<HomePage> {
                                   Column(
                                     children: [
                                       Container(
-                                        width: Get.width * 0.21,
-                                        height: Get.width * 0.21,
+                                        width: Get.width * 0.17,
+                                        height: Get.width * 0.17,
                                         decoration: BoxDecoration(
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(2000),
@@ -413,13 +407,23 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        "Explore",
-                        style: GoogleFonts.poppins(
-                          fontSize: Get.width * 0.06,
-                          fontWeight: FontWeight.w800,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                        Text(
+                          "Explore",
+                          style: GoogleFonts.poppins(
+                            fontSize: Get.width * 0.06,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
-                      ),
+                        GestureDetector(
+                            onTap: ()
+                            {
+                              Navigator.push(context, CupertinoPageRoute(builder: (c) => const LiveSession()));
+                            },
+                            child: const Icon(Icons.live_tv,size: 30,))
+                      ]),
                     ),
                     const SizedBox(height: 10),
                     SizedBox(
