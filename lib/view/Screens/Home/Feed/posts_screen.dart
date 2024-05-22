@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Screens/Home/Feed/image_preview.dart';
+import 'package:softec_app_dev/view/Screens/Home/Feed/new_post.dart';
 import 'package:softec_app_dev/view_model/feed_controller.dart';
 
 import '../../../../model/post.dart';
@@ -84,6 +88,21 @@ class _PostsScreenState extends State<PostsScreen> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: yellowDark,
+        onPressed: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (c) => const NewPost(),
+            ),
+          );
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
@@ -96,10 +115,23 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      postUrl,
-      filterQuality: FilterQuality.high,
-      fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (c) => ImagePreview(
+              imageUrl: postUrl,
+              tag: postUrl,
+            ),
+          ),
+        );
+      },
+      child: Image.network(
+        postUrl,
+        filterQuality: FilterQuality.high,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

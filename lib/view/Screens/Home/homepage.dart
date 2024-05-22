@@ -99,23 +99,26 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String profilePicUrl =
-      'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg';
+  String profilePicUrl = '';
 
   Future<String> getProfilePic() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Get the document snapshot corresponding to the current user's UID
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser?.uid)
-          .get();
+      try {
+        // Get the document snapshot corresponding to the current user's UID
+        DocumentSnapshot snapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .get();
 
-      // Get the 'profilePicUrl' field from the document
-      setState(() {
-        profilePicUrl = snapshot.get('profilePicUrl');
-      });
-      return profilePicUrl;
+        // Get the 'profilePicUrl' field from the document
+        setState(() {
+          profilePicUrl = snapshot.get('profilePicUrl');
+        });
+        return profilePicUrl;
+      } catch (e) {
+        return e.toString();
+      }
     } else {
       return 'pic';
     }
@@ -161,16 +164,29 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: Get.width * 0.15,
                         width: Get.width * 0.15,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20000),
-                          ),
-                          child: Image.network(
-                            profilePicUrl,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.high,
-                          ),
-                        ),
+                        child: profilePicUrl.isNotEmpty
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10000),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10000),
+                                  ),
+                                  child: Image.network(
+                                    profilePicUrl,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 0.0005,
+                                  ),
+                                ),
+                                child: const Icon(Icons.person),
+                              ),
                       )
                     ],
                   ),

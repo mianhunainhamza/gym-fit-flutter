@@ -11,14 +11,19 @@ class ImagePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(Icons.arrow_back_ios_new),
+          child: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
+      backgroundColor: Colors.black,
       body: SizedBox(
         width: Get.width,
         height: Get.height,

@@ -90,7 +90,7 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .snapshots(),
       builder: (context, snapshot) {
-         if (snapshot.hasError) {
+        if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
 
@@ -107,7 +107,7 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
               height: Get.height * 0.14,
               width: Get.height * 0.14,
               child: ClipRRect(
-                // borderRadius: BorderRadius.circular(100000),
+                borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),
                 child: GestureDetector(
                   onTap: () {
@@ -202,17 +202,11 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
             );
           }).onError((error, stackTrace) {
             Utils().showMessage(
-                context,
-                error.toString(),
-                Theme.of(context).colorScheme.error
-            );
+                context, error.toString(), Theme.of(context).colorScheme.error);
           });
         }).onError((error, stackTrace) {
           Utils().showMessage(
-              context,
-              error.toString(),
-              Theme.of(context).colorScheme.error
-          );
+              context, error.toString(), Theme.of(context).colorScheme.error);
         });
       } catch (e) {
         Utils().showMessage(
@@ -222,12 +216,8 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
         );
       }
     } else {
-      Utils().showMessage(
-          context,
-          "Please select an image",
-          Theme.of(context).colorScheme.error
-      );
+      Utils().showMessage(context, "Please select an image",
+          Theme.of(context).colorScheme.error);
     }
   }
-
 }
