@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/main.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Screens/Home/Feed/fetch_users_posts.dart';
 import 'package:softec_app_dev/view/Screens/Work/fetch_event.dart';
 import '../../../model/post.dart';
 import '../../../view_model/feed_controller.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> userJoinedEvents = [];
   final List<Map<String, dynamic>> allEvents = [];
   late Future<List<PostModel>> posts;
+  List<UserModel> users = [];
 
   @override
   void initState() {
@@ -32,12 +34,13 @@ class _HomePageState extends State<HomePage> {
     getName();
     getProfilePic();
     fetchUserJoinedEvents();
+    fetchUsers();
     posts = feedController.getPosts();
   }
 
   Future<void> refresh() async {
     getName();
-
+    fetchUsers();
     fetchUserJoinedEvents();
     posts = feedController.getPosts();
   }
@@ -75,6 +78,8 @@ class _HomePageState extends State<HomePage> {
       }
     }
   }
+
+  
 
   Widget trainerSkeleton() {
     return Container(
@@ -419,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 10),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: newFeed(posts),
+                      child: newFeed(posts, users),
                     ),
                   ],
                 ),

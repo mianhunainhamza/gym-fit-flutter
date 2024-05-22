@@ -172,6 +172,7 @@ class _NewPostState extends State<NewPost> {
         // Get user name
         DocumentSnapshot<Map<String, dynamic>> snapshot1 = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
         String userName = snapshot1.data()?['name'];
+        String userProfilePic = snapshot1.data()?['profilePicUrl'];
 
         // Get post details
         String title = titleController.text.trim();
@@ -187,6 +188,7 @@ class _NewPostState extends State<NewPost> {
           desc: desc,
           email: user.email!,
           imageUrl: imageUrl,
+          userProfilePic: userProfilePic,
           time: DateFormat('hh:mm a dd/MM/yyyy').format(DateTime.now()),
         );
 

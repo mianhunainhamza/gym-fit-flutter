@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:softec_app_dev/Model/user_model.dart';
 import '../../../../model/post.dart';
 import 'image_preview.dart';
 
-Widget newFeed(Future<List<PostModel>> posts) {
+Widget newFeed(Future<List<PostModel>> posts, List<UserModel> users) {
   return FutureBuilder<List<PostModel>>(
     future: posts,
     builder: (context, snapshot) {
@@ -15,94 +16,93 @@ Widget newFeed(Future<List<PostModel>> posts) {
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
           child: Padding(
-            padding:const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: SizedBox(
-              width: Get.width,
-              height: Get.height,
-              child:Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: Get.width * 0.12,
-                        width: Get.width * 0.12,
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey[200],
-                          ),
+                width: Get.width,
+                height: Get.height,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Get.width * 0.12,
+                      width: Get.width * 0.12,
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey[200],
                         ),
                       ),
-                      SizedBox(width: Get.width * 0.015),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Text(
-                                  'Name',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: Get.width * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                    ),
+                    SizedBox(width: Get.width * 0.015),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Text(
+                                'Name',
+                                style: GoogleFonts.poppins(
+                                  fontSize: Get.width * 0.04,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Text(
-                                  '@username',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: Get.width * 0.035,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.grey,
-                                  ),
+                            ),
+                            const SizedBox(width: 10),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Text(
+                                '@username',
+                                style: GoogleFonts.poppins(
+                                  fontSize: Get.width * 0.035,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.grey,
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: Get.height * 0.008),
-                          Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Text(
-                              'Description...',
-                              style: GoogleFonts.poppins(
-                                fontSize: Get.width * 0.032,
                               ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: Get.height * 0.008),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Text(
+                            'Description...',
+                            style: GoogleFonts.poppins(
+                              fontSize: Get.width * 0.032,
                             ),
                           ),
-                          SizedBox(height: Get.height * 0.015),
-                          Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Container(
-                              height: Get.height * 0.25,
-                              width: Get.width * 0.75,
-                              color: Colors.grey[200],
+                        ),
+                        SizedBox(height: Get.height * 0.015),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            height: Get.height * 0.25,
+                            width: Get.width * 0.75,
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                        SizedBox(height: Get.height * 0.015),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Text(
+                            '12:00 AM 1/1/2000',
+                            style: GoogleFonts.poppins(
+                              color: Colors.grey.withOpacity(0.8),
+                              fontSize: Get.width * 0.035,
                             ),
                           ),
-                          SizedBox(height: Get.height * 0.015),
-                          Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Text(
-                              '12:00 AM 1/1/2000',
-                              style: GoogleFonts.poppins(
-                                color: Colors.grey.withOpacity(0.8),
-                                fontSize: Get.width * 0.035,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-            ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
           ),
         );
       } else if (snapshot.hasError) {
@@ -121,6 +121,7 @@ Widget newFeed(Future<List<PostModel>> posts) {
             ),
           );
         }
+
         return Column(
           children: postList.map((post) {
             return Column(
@@ -135,9 +136,23 @@ Widget newFeed(Future<List<PostModel>> posts) {
                       SizedBox(
                         height: Get.width * 0.12,
                         width: Get.width * 0.12,
-                        child: const Icon(
-                          CupertinoIcons.profile_circled,
-                          size: 40,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            // border: Border.all(
+                            //   color: Colors.grey,
+                            // ),
+                            borderRadius: BorderRadius.circular(10000),
+                          ),
+                          child: post.userProfilePic.toString().isEmpty
+                              ? const Icon(Icons.person)
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(10000),
+                                  child: Image.network(
+                                    post.userProfilePic,
+                                    filterQuality: FilterQuality.high,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                         ),
                       ),
                       SizedBox(width: Get.width * 0.015),

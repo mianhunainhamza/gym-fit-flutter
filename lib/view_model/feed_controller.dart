@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:softec_app_dev/Model/user_model.dart';
 
 import '../model/post.dart';
 
@@ -8,9 +9,9 @@ class FeedController extends GetxController {
   RxBool checkUser = false.obs;
 
   final CollectionReference postsRef =
-  FirebaseFirestore.instance.collection('posts');
+      FirebaseFirestore.instance.collection('posts');
   final CollectionReference userRef =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   void uploadPost(PostModel post) {
     try {
@@ -29,16 +30,15 @@ class FeedController extends GetxController {
     }
   }
 
-
   Future<void> userType() async {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
         DocumentSnapshot userSnapshot =
-        await userRef.doc(currentUser.uid).get();
+            await userRef.doc(currentUser.uid).get();
         if (userSnapshot.exists) {
           Map<String, dynamic> userData =
-          userSnapshot.data() as Map<String, dynamic>;
+              userSnapshot.data() as Map<String, dynamic>;
           String? role = userData['role'];
           if (role == 'Fitness Professional') {
             checkUser = true.obs;
@@ -58,12 +58,15 @@ class FeedController extends GetxController {
       QuerySnapshot querySnapshot = await postsRef.get();
       for (var doc in querySnapshot.docs) {
         PostModel post = PostModel(
-            userName: doc['userName'],
-            title: doc['title'],
-            desc: doc['desc'],
-            email: doc['email'],
-            imageUrl: doc['imageUrl'],
-            time: doc['time']);
+          userName: doc['userName'],
+          title: doc['title'],
+          desc: doc['desc'],
+          email: doc['email'],
+          imageUrl: doc['imageUrl'],
+          time: doc['time'],
+          userProfilePic: doc['userProfilePic'],
+        );
+
         posts.add(post);
       }
     } catch (e) {
@@ -73,11 +76,36 @@ class FeedController extends GetxController {
     return posts;
   }
 
+  Future<List<UserModel>> getUsers() async {
+    final CollectionReference usersRef =
+        FirebaseFirestore.instance.collection('users');
+    List<UserModel> users = [];
+
+    try {
+      QuerySnapshot querySnapshot = await usersRef.get();
+      for (var doc in querySnapshot.docs) {
+        UserModel user = UserModel(
+          username: doc['name'],
+          email: doc['title'],
+          pass: doc['desc'],
+          role: doc['email'],
+          profilePicUrl: doc['profilePicUrl'],
+        );
+        users.add(user);
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+
+    return users;
+  }
+
   @override
   void onInit() {
     super.onInit();
     userType();
     getPosts();
+    getUsers();
     print("Feed Controller");
   }
 

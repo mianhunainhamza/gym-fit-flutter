@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:softec_app_dev/Model/user_model.dart';
 import 'package:softec_app_dev/utils/colors.dart';
+import 'package:softec_app_dev/view/Screens/Home/Feed/fetch_users_posts.dart';
 import 'package:softec_app_dev/view/Screens/LiveCall/live_sessions.dart';
 import '../../../../model/post.dart';
 import '../../../../view_model/feed_controller.dart';
@@ -20,8 +22,8 @@ class _FeedState extends State<Feed> {
   final FeedController feedController = Get.put(FeedController());
   late Future<List<PostModel>> posts;
   bool _isFirstBuild = true;
-  bool _isProfessional =
-     false;
+  bool _isProfessional = false;
+  List<UserModel> users = [];
 
   @override
   void initState() {
@@ -31,16 +33,14 @@ class _FeedState extends State<Feed> {
       _isFirstBuild = false;
     }
     checkProfessionalStatus();
+    fetchUsers();
   }
 
   Future<void> checkProfessionalStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
     String? uid = user?.uid;
     DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get();
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
     if (userSnapshot.exists) {
       String role = userSnapshot.data()?['role'] ?? '';
@@ -49,7 +49,6 @@ class _FeedState extends State<Feed> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,7 @@ class _FeedState extends State<Feed> {
               ),
             ],
           ),
-          body: SingleChildScrollView(child: newFeed(posts)),
+          body: SingleChildScrollView(child: newFeed(posts, users)),
           floatingActionButton: _isProfessional
               ? Padding(
                   padding: const EdgeInsets.only(left: 10, bottom: 5),
