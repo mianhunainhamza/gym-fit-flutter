@@ -84,11 +84,7 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .snapshots(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // Show a loader while data is being fetched
-        }
-
-        if (snapshot.hasError) {
+         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
 
@@ -107,7 +103,7 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100000),
                 // child: Image.asset('assets/images/trainer.jpg'),
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     setState(() {
                       pickGalleryImage();
@@ -174,10 +170,17 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
     if (image != null) {
       try {
         final userId = FirebaseAuth.instance.currentUser!.uid;
-
-        await storage.ref('/ProfileImages/$userId.jpg').delete();
-
         final storageRef = storage.ref('/ProfileImages/$userId.jpg');
+
+        // Attempt to delete the existing image, if it exists
+        try {
+          await storageRef.delete();
+        } catch (e) {
+          // If the image does not exist, we ignore the error and continue
+          print('No existing image to delete, or another error occurred: $e');
+        }
+
+        // Upload the new image
         final uploadTask = storageRef.putFile(image!.absolute);
 
         Future.value(uploadTask).then((value) async {
@@ -193,9 +196,18 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
             );
           }).onError((error, stackTrace) {
             Utils().showMessage(
-                context, error.toString(), Theme.of(context).colorScheme.error);
+                context,
+                error.toString(),
+                Theme.of(context).colorScheme.error
+            );
           });
-        }).onError((error, stackTrace) {});
+        }).onError((error, stackTrace) {
+          Utils().showMessage(
+              context,
+              error.toString(),
+              Theme.of(context).colorScheme.error
+          );
+        });
       } catch (e) {
         Utils().showMessage(
           context,
@@ -205,7 +217,11 @@ class _UserProfileInfoState extends State<_UserProfileInfo> {
       }
     } else {
       Utils().showMessage(
-          context, "Please select image", Theme.of(context).colorScheme.error);
+          context,
+          "Please select an image",
+          Theme.of(context).colorScheme.error
+      );
     }
   }
+
 }
