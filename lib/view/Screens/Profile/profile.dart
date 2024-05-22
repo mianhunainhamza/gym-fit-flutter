@@ -25,41 +25,43 @@ class Profile extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: Get.height * 0.02),
-            Center(
-              child: Text(
-                "Profile",
-                style: GoogleFonts.poppins(
-                  fontSize: Get.height * 0.03,
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: Get.height * 0.02),
+              Center(
+                child: Text(
+                  "Profile",
+                  style: GoogleFonts.poppins(
+                    fontSize: Get.height * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: Get.height * 0.03),
-            const _UserProfileInfo(),
-            SizedBox(height: Get.height * 0.03),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 25),
-              child: SizedBox(
-                height: Get.height * 0.13,
-                child: const Status(),
-              ),
-            ),
-            SizedBox(height: Get.height * 0.03),
-            Padding(
-              padding: const EdgeInsets.only(left: 23, right: 23),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(20),
+              SizedBox(height: Get.height * 0.03),
+              const _UserProfileInfo(),
+              SizedBox(height: Get.height * 0.03),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 25),
+                child: SizedBox(
+                  height: Get.height * 0.13,
+                  child: const Status(),
                 ),
-                child: const Options(),
               ),
-            ),
-          ],
+              SizedBox(height: Get.height * 0.03),
+              Padding(
+                padding: const EdgeInsets.only(left: 23, right: 23, bottom: 18),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Options(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

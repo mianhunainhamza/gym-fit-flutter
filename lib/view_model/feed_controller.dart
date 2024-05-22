@@ -76,6 +76,36 @@ class FeedController extends GetxController {
     return posts;
   }
 
+  Future<List<PostModel>> getUserPosts(String userEmail) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    List<PostModel> posts = [];
+
+    try {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('email', isEqualTo: auth.currentUser!.email.toString())
+          .get();
+      for (var doc in querySnapshot.docs) {
+        PostModel post = PostModel(
+          userName: doc['userName'],
+          title: doc['title'],
+          desc: doc['desc'],
+          email: doc['email'],
+          imageUrl: doc['imageUrl'],
+          time: doc['time'],
+          userProfilePic: doc['userProfilePic'],
+        );
+
+        posts.add(post);
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+
+    return posts;
+  }
+
   Future<List<UserModel>> getUsers() async {
     final CollectionReference usersRef =
         FirebaseFirestore.instance.collection('users');

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:softec_app_dev/view/Screens/Home/Feed/posts_screen.dart';
 import '../../Authentication/login_screen.dart';
 import '../Features//help.dart';
 import '../Features/notifications.dart';
@@ -21,44 +22,71 @@ class Options extends StatelessWidget {
       shrinkWrap: true,
       children: [
         ListTile(
-          onTap: (){
-            Get.to(const Statistics(),transition: Transition.cupertino);
+          onTap: () {
+            Get.to(const Statistics(), transition: Transition.cupertino);
           },
           leading: const Icon(CupertinoIcons.person),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('Statistics',style: GoogleFonts.aBeeZee(),),
+          title: Text(
+            'Statistics',
+            style: GoogleFonts.aBeeZee(),
+          ),
         ),
         ListTile(
-          onTap: (){
-            Get.to(const Settings(),transition: Transition.cupertino);
+          onTap: () {
+            Get.to(const PostsScreen(), transition: Transition.cupertino);
+          },
+          leading: const Icon(CupertinoIcons.circle_grid_3x3),
+          trailing: const Icon(Icons.arrow_forward_ios_outlined),
+          title: Text(
+            'Your Posts',
+            style: GoogleFonts.aBeeZee(),
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Get.to(const Settings(), transition: Transition.cupertino);
           },
           leading: const Icon(CupertinoIcons.settings),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('General Settings',style: GoogleFonts.aBeeZee(),),
+          title: Text(
+            'General Settings',
+            style: GoogleFonts.aBeeZee(),
+          ),
         ),
         ListTile(
-          onTap: (){
-            Get.to(const NotificationSettings(),transition: Transition.cupertino);
+          onTap: () {
+            Get.to(const NotificationSettings(),
+                transition: Transition.cupertino);
           },
           leading: const Icon(Icons.notifications_none_outlined),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('Notifications',style: GoogleFonts.aBeeZee(),),
+          title: Text(
+            'Notifications',
+            style: GoogleFonts.aBeeZee(),
+          ),
         ),
         ListTile(
-          onTap: (){
-            Get.to(const Help(),transition: Transition.cupertino);
+          onTap: () {
+            Get.to(const Help(), transition: Transition.cupertino);
           },
           leading: const Icon(Icons.help_outline),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('Terms and Conditions',style: GoogleFonts.aBeeZee(),),
+          title: Text(
+            'Terms and Conditions',
+            style: GoogleFonts.aBeeZee(),
+          ),
         ),
         ListTile(
-          onTap: (){
+          onTap: () {
             logOut(context);
           },
           leading: const Icon(CupertinoIcons.power),
           trailing: const Icon(Icons.arrow_forward_ios_outlined),
-          title: Text('Log Out',style: GoogleFonts.aBeeZee(),),
+          title: Text(
+            'Log Out',
+            style: GoogleFonts.aBeeZee(),
+          ),
         )
       ],
     );
@@ -69,10 +97,12 @@ class Options extends StatelessWidget {
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text("Sure want to logout?", style: GoogleFonts.poppins(fontSize: 17)),
+          title: Text("Sure want to logout?",
+              style: GoogleFonts.poppins(fontSize: 17)),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Cancel', style: GoogleFonts.poppins(color: Colors.black)),
+              child: Text('Cancel',
+                  style: GoogleFonts.poppins(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -88,7 +118,8 @@ class Options extends StatelessWidget {
                 await prefs.setBool('isLoggedIn', false);
 
                 // Navigate to login screen
-                Get.offAll(() => LoginScreen(), transition: Transition.cupertino);
+                Get.offAll(() => LoginScreen(),
+                    transition: Transition.cupertino);
               },
             ),
           ],
