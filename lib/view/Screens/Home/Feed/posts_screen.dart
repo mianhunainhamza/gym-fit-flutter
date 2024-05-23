@@ -23,17 +23,87 @@ class _PostsScreenState extends State<PostsScreen> {
 
   late Future<List<PostModel>> allPosts;
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool isDeleting = false;
+  Set<int> selectedPosts = Set<int>();
 
   @override
   void initState() {
-    allPosts = feedController.getUserPosts(auth.currentUser!.email!);
+    allPosts = feedController.getUserPosts();
     super.initState();
+  }
+
+  void _toggleDeleteMode() {
+    if (isDeleting) {
+      if (selectedPosts.isNotEmpty) {
+        _showDeleteConfirmationDialog();
+      } else {
+        setState(() {
+          isDeleting = false;
+        });
+      }
+    } else {
+      setState(() {
+        isDeleting = true;
+      });
+    }
+  }
+
+  void _showDeleteConfirmationDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('Delete Posts'),
+          content: const Text('Are you sure you want to delete the selected posts?'),
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              child: const Text('Delete'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await _deleteSelectedPosts();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteSelectedPosts() async {
+    for (int index in selectedPosts) {
+      await feedController.deletePost(index);
+    }
+    setState(() {
+      selectedPosts.clear();
+      isDeleting = false;
+    });
+    // Refresh the posts list after deletion
+    allPosts = feedController.getUserPosts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+              onTap: _toggleDeleteMode,
+              child: Icon(
+                isDeleting ? CupertinoIcons.check_mark : CupertinoIcons.delete,
+              ),
+            ),
+          )
+        ],
         automaticallyImplyLeading: false,
         leading: GestureDetector(
           onTap: () {
@@ -45,8 +115,8 @@ class _PostsScreenState extends State<PostsScreen> {
         title: Text(
           "Your Posts",
           style: GoogleFonts.poppins(
-            fontSize: Get.height * 0.03,
-            fontWeight: FontWeight.bold,
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -75,14 +145,24 @@ class _PostsScreenState extends State<PostsScreen> {
                 ],
               ),
               childrenDelegate: SliverChildBuilderDelegate(
-                (context, index) {
+                    (context, index) {
                   return Tile(
                     index: index,
                     postUrl: posts[index].imageUrl,
+                    isDeleting: isDeleting,
+                    isSelected: selectedPosts.contains(index),
+                    onSelect: () {
+                      setState(() {
+                        if (selectedPosts.contains(index)) {
+                          selectedPosts.remove(index);
+                        } else {
+                          selectedPosts.add(index);
+                        }
+                      });
+                    },
                   );
                 },
-                childCount: posts
-                    .length, // Set the child count based on the length of the posts list
+                childCount: posts.length,
               ),
             );
           }
@@ -110,27 +190,55 @@ class _PostsScreenState extends State<PostsScreen> {
 class Tile extends StatelessWidget {
   final int index;
   final String postUrl;
+  final bool isDeleting;
+  final bool isSelected;
+  final VoidCallback onSelect;
 
-  const Tile({super.key, required this.index, required this.postUrl});
+  const Tile({
+    super.key,
+    required this.index,
+    required this.postUrl,
+    required this.isDeleting,
+    required this.isSelected,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (c) => ImagePreview(
-              imageUrl: postUrl,
-              tag: postUrl,
+    return Hero(
+      tag: postUrl,
+      child: GestureDetector(
+        onTap: isDeleting ? onSelect : () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (c) => ImagePreview(
+                imageUrl: postUrl,
+              ),
             ),
-          ),
-        );
-      },
-      child: Image.network(
-        postUrl,
-        filterQuality: FilterQuality.high,
-        fit: BoxFit.cover,
+          );
+        },
+        child: Stack(
+          children: [
+            Image.network(
+              postUrl,
+              filterQuality: FilterQuality.high,
+              fit: BoxFit.cover, // Ensure the image fits the tile properly
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            if (isDeleting)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Icon(
+                  isSelected ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.circle,
+                  color: yellowDark,
+                  size: 30,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

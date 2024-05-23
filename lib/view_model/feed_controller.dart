@@ -76,9 +76,8 @@ class FeedController extends GetxController {
     return posts;
   }
 
-  Future<List<PostModel>> getUserPosts(String userEmail) async {
+  Future<List<PostModel>> getUserPosts() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-
     List<PostModel> posts = [];
 
     try {
@@ -104,6 +103,21 @@ class FeedController extends GetxController {
     }
 
     return posts;
+  }
+
+  Future<bool> deletePost(int index) async {
+    try {
+      QuerySnapshot querySnapshot = await postsRef
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        await postsRef.doc(querySnapshot.docs[index].id).delete();
+        return true; // Deletion successful
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+    return false; // Deletion failed
   }
 
   Future<List<UserModel>> getUsers() async {

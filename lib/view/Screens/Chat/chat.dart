@@ -44,9 +44,10 @@ class _ChatState extends State<Chat> {
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-              child: CircularProgressIndicator(
-            color: yellowColor,
-          ));
+            child: CircularProgressIndicator(
+              color: yellowColor,
+            ),
+          );
         }
         if (snapshot.hasData) {
           return ListView(
@@ -55,7 +56,7 @@ class _ChatState extends State<Chat> {
                 .toList(),
           );
         }
-        return const Text('No User',style: TextStyle(color: Colors.black),);
+        return const Text('No User', style: TextStyle(color: Colors.black));
       },
     );
   }
@@ -71,6 +72,8 @@ class _ChatState extends State<Chat> {
       return const SizedBox();
     }
 
+    final profilePicUrl = data['profilePicUrl'] as String?;
+
     return ListTile(
       title: Container(
         width: Get.width,
@@ -81,7 +84,13 @@ class _ChatState extends State<Chat> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 13),
           child: Row(
             children: [
-              const Icon(CupertinoIcons.profile_circled),
+              if (profilePicUrl != null && profilePicUrl.isNotEmpty)
+                CircleAvatar(
+                  backgroundImage: NetworkImage(profilePicUrl),
+                  radius: 30, // Set the radius to 40
+                )
+              else
+                const Icon(CupertinoIcons.profile_circled, size: 70), // Set the icon size to 80 (double the radius)
               const SizedBox(width: 10),
               Text(
                 data['name'] ?? '',
@@ -95,12 +104,13 @@ class _ChatState extends State<Chat> {
       ),
       onTap: () {
         Get.to(
-            ChatScreen(
-              rUserId: data['uid'] ?? '',
-              rUserEmail: data['email'] ?? '',
-              rUserName: data['name'] ?? '',
-            ),
-            transition: Transition.cupertino);
+          ChatScreen(
+            rUserId: data['uid'] ?? '',
+            rUserEmail: data['email'] ?? '',
+            rUserName: data['name'] ?? '',
+          ),
+          transition: Transition.cupertino,
+        );
       },
     );
   }
