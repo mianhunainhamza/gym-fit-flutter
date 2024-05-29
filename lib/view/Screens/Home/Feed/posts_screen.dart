@@ -57,7 +57,8 @@ class _PostsScreenState extends State<PostsScreen> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: const Text('Delete Posts'),
-          content: const Text('Are you sure you want to delete the selected posts?'),
+          content:
+              const Text('Are you sure you want to delete the selected posts?'),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -148,7 +149,7 @@ class _PostsScreenState extends State<PostsScreen> {
                 ],
               ),
               childrenDelegate: SliverChildBuilderDelegate(
-                    (context, index) {
+                (context, index) {
                   return Tile(
                     index: index,
                     postUrl: posts[index].imageUrl,
@@ -252,7 +253,6 @@ class Tile extends StatelessWidget {
           CupertinoPageRoute(
             builder: (c) => ImagePreview(
               imageUrl: postUrl,
-              tag: postUrl,
             ),
           ),
         );

@@ -192,7 +192,6 @@ Widget newFeed(Future<List<PostModel>> posts) {
                                 CupertinoPageRoute(
                                   builder: (c) => ImagePreview(
                                     imageUrl: post.imageUrl,
-                                    tag: post.imageUrl,
                                   ),
                                 ),
                               );
