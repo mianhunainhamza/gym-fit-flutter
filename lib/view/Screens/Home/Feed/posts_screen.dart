@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -115,7 +118,44 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    void deletePost(BuildContext context, PostModel post) {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      FirebaseFirestore ref = FirebaseFirestore.instance;
+
+      showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text("Sure want to delete this post?",
+                style: GoogleFonts.poppins(fontSize: 17)),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text('Cancel',
+                    style: GoogleFonts.poppins(color: Colors.black)),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+              CupertinoDialogAction(
+                child:
+                    Text('OK', style: GoogleFonts.poppins(color: Colors.red)),
+                onPressed: () async {
+                  storage.ref('images').child('$post.jpg').delete();
+                  ref.collection('posts').doc().id;
+                  // ref.child(id).remove();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    return InkWell(
+      onLongPress: () {
+        //deletePost(context);
+      },
       onTap: () {
         Navigator.push(
           context,
