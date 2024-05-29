@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 
 class ImagePreview extends StatelessWidget {
   final String imageUrl;
-  final String tag;
 
-  const ImagePreview({super.key, required this.imageUrl, required this.tag});
+  const ImagePreview({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class ImagePreview extends StatelessWidget {
       body: SizedBox(
         width: Get.width,
         height: Get.height,
-        child: Hero(tag: tag, child: Image.network(imageUrl)),
+        child: Hero(tag: imageUrl, child: Image.network(imageUrl)),
       ),
     );
   }
